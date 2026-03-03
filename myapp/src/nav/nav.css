@@ -74,3 +74,17 @@
   justify-content: center;
   font-weight: bold;
 }
+
+@media (max-width: 600px) {
+  .navbar-container {
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  .nav-menu {
+    width: 100%;
+    justify-content: space-around;
+    gap: 1rem;
+  }
+}

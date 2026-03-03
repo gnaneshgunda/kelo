@@ -64,3 +64,17 @@
   display: block;
   margin-bottom: 0.5rem;
 }
+
+@media (max-width: 768px) {
+  .about-container {
+    padding: 2.5rem 1.5rem;
+  }
+
+  .about-content h2 {
+    font-size: 2rem;
+  }
+
+  .about-content .lead {
+    font-size: 1.15rem;
+  }
+}
