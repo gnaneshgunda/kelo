@@ -11,7 +11,7 @@ export default function Nav() {
       <div className="navbar-container">
         <Link to="/" className="navbar-logo">
           <div className="logo-placeholder"></div>
-          <h1>handycrafts</h1>
+          <h1>KeLo</h1>
         </Link>
         <ul className="nav-menu">
           <li className="nav-item">

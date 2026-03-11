@@ -4,12 +4,12 @@ export default function About() {
   return (
     <div className="about-container">
       <div className="about-content">
-        <h2>About handycrafts</h2>
+        <h2>About KeLo</h2>
         <p className="lead">
           We believe in the power of the handmade. Every piece tells a story of tradition, patience, and creativity.
         </p>
         <p>
-          At <strong>handycrafts</strong>, we bring together independent artisans from all over the world.
+          At <strong>KeLo</strong>, we bring together independent artisans from all over the world.
           Our mission is to celebrate traditional craftsmanship and provide a platform for makers to share
           their unique, high-quality creations directly with you.
         </p>

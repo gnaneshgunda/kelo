@@ -6,10 +6,12 @@ import Home from './pages/Home.tsx';
 import About from './pages/About.tsx';
 import CartPage from './pages/CartPage.tsx';
 import { CartProvider } from './context/CartContext.tsx';
+import SplashScreen from './components/SplashScreen.tsx';
 
 function App() {
   return (
     <CartProvider>
+      <SplashScreen />
       <div className="app-container">
         <Nav />
         <main className="main-content">
