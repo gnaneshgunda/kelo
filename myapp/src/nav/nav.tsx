@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
-import { FaShoppingCart } from 'react-icons/fa';
+import { FaShoppingCart, FaHome, FaInfoCircle } from 'react-icons/fa';
 import './nav.css';
 
 export default function Nav() {
@@ -15,16 +15,24 @@ export default function Nav() {
         </Link>
         <ul className="nav-menu">
           <li className="nav-item">
-            <Link to="/" className="nav-links">Home</Link>
+            <Link to="/" className="nav-links">
+              <FaHome className="nav-icon" />
+              <span className="nav-text">Home</span>
+            </Link>
           </li>
           <li className="nav-item">
-            <Link to="/about" className="nav-links">About Us</Link>
+            <Link to="/about" className="nav-links">
+              <FaInfoCircle className="nav-icon" />
+              <span className="nav-text">About Us</span>
+            </Link>
           </li>
           <li className="nav-item cart-item">
             <Link to="/cart" className="nav-links cart-link">
-              <FaShoppingCart className="cart-icon" />
-              {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
-              <span className="cart-text">Cart</span>
+              <div className="cart-icon-container">
+                <FaShoppingCart className="nav-icon cart-icon" />
+                {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
+              </div>
+              <span className="nav-text">Cart</span>
             </Link>
           </li>
         </ul>

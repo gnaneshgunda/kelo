@@ -1,6 +1,7 @@
 .navbar {
   background-color: var(--white);
   box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  /* Un-stick the whole navbar for desktop/tablet initially; desktop might want sticky, but let's see */
   position: sticky;
   top: 0;
   z-index: 100;
@@ -39,6 +40,9 @@
 }
 
 .nav-links {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   color: var(--text-color);
   font-weight: 500;
   transition: color 0.3s;
@@ -48,21 +52,32 @@
   color: var(--primary-color);
 }
 
+.nav-icon {
+  display: none; /* Hide icons on desktop by default */
+  font-size: 1.2rem;
+}
+
 .cart-link {
   display: flex;
   align-items: center;
   gap: 5px;
+}
+
+.cart-icon-container {
   position: relative;
+  display: flex;
+  align-items: center;
 }
 
 .cart-icon {
+  display: block; /* Always show cart icon */
   font-size: 1.2rem;
 }
 
 .cart-badge {
   position: absolute;
-  top: -8px;
-  left: -8px;
+  top: -10px;
+  right: -10px;
   background-color: var(--primary-color);
   color: var(--white);
   font-size: 0.75rem;
@@ -76,15 +91,56 @@
 }
 
 @media (max-width: 600px) {
+  .navbar {
+    position: relative; /* Let the logo scroll naturally */
+    box-shadow: none;
+  }
+
   .navbar-container {
     flex-direction: column;
-    gap: 1rem;
-    padding: 1rem;
+    padding: 1.5rem 1rem 0 1rem;
+    align-items: center;
   }
 
   .nav-menu {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: var(--white);
     width: 100%;
     justify-content: space-around;
-    gap: 1rem;
+    padding: 0.8rem 0;
+    margin: 0;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+    z-index: 999;
+  }
+
+  .nav-item {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    gap: 4px;
+    font-size: 0.75rem;
+  }
+
+  .nav-icon {
+    display: block; /* Show Home/About icons on mobile */
+    font-size: 1.4rem;
+    margin-bottom: 2px;
+  }
+
+  .cart-badge {
+    top: -5px;
+    right: -10px;
+  }
+
+  /* Add padding to the bottom of the body to prevent content hiding behind the bottom navbar */
+  :root {
+    --mobile-nav-height: 70px;
   }
 }
