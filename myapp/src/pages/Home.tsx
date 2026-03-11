@@ -21,11 +21,6 @@ export default function Home() {
     <div className="home-container">
       <HallDaysSpecials specials={specialOffers} />
 
-      <div className="hero-section">
-        <h2>Welcome to KeLo!</h2>
-        <p>Discover unique, handmade treasures curated just for you.</p>
-      </div>
-
       <div className="filter-section">
         <h3>Categories</h3>
         <div className="category-buttons">
