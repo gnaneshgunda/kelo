@@ -1,6 +1,6 @@
 import type { Product } from '../types';
 import { useCart } from '../context/CartContext';
-import { FaCartPlus } from 'react-icons/fa';
+import { FaCartPlus, FaPlus, FaMinus } from 'react-icons/fa';
 import './ProductCard.css';
 
 interface ProductCardProps {
@@ -8,10 +8,21 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
-  const { addToCart } = useCart();
+  const { cartItems, addToCart, updateQuantity } = useCart();
+
+  const cartItem = cartItems.find((item) => item.product.id === product.id);
+  const quantity = cartItem ? cartItem.quantity : 0;
 
   const handleAdd = () => {
     addToCart(product);
+  };
+
+  const handleIncrement = () => {
+    updateQuantity(product.id, quantity + 1);
+  };
+
+  const handleDecrement = () => {
+    updateQuantity(product.id, quantity - 1);
   };
 
   return (
@@ -25,9 +36,22 @@ export default function ProductCard({ product }: ProductCardProps) {
         <p className="product-description">{product.description}</p>
         <div className="product-bottom-row">
           <span className="product-price">${product.price.toFixed(2)}</span>
-          <button className="add-to-cart-btn" onClick={handleAdd}>
-            <FaCartPlus /> Add to Cart
-          </button>
+
+          {quantity > 0 ? (
+            <div className="product-quantity-controls">
+              <button className="qty-btn" onClick={handleDecrement} aria-label="Decrease quantity">
+                <FaMinus />
+              </button>
+              <span className="qty-display">{quantity}</span>
+              <button className="qty-btn" onClick={handleIncrement} aria-label="Increase quantity">
+                <FaPlus />
+              </button>
+            </div>
+          ) : (
+            <button className="add-to-cart-btn" onClick={handleAdd}>
+              <FaCartPlus /> Add to Cart
+            </button>
+          )}
         </div>
       </div>
     </div>

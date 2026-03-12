@@ -43,10 +43,14 @@ a {
 }
 
 @media (max-width: 600px) {
+  .app-container {
+    /* Add extra padding to account for the bottom fixed mobile navbar so footer shows */
+    padding-bottom: 70px;
+  }
+
   .main-content {
-    /* Add extra padding to account for the bottom fixed mobile navbar */
-    padding-bottom: 90px;
     padding-left: 1rem;
     padding-right: 1rem;
+    padding-bottom: 1rem;
   }
 }
