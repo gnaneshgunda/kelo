@@ -9,10 +9,10 @@ export default function Nav() {
   return (
     <nav className="navbar">
       <div className="navbar-container">
-        <div className="navbar-logo">
+        <Link to="/" className="navbar-logo">
           <div className="logo-placeholder"></div>
           <h1>KeLo</h1>
-        </div>
+        </Link>
         <ul className="nav-menu">
           <li className="nav-item">
             <Link to="/" className="nav-links">
