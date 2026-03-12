@@ -6,7 +6,7 @@ export default function Footer() {
     <footer className="footer">
       <div className="footer-container">
         <div className="footer-left">
-          <p>&copy; {new Date().getFullYear()} handycrafts. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} KeLo. All rights reserved.</p>
         </div>
         <div className="footer-right">
           <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="social-icon">
