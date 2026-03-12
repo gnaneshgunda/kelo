@@ -1,79 +1,84 @@
-.splash-container {
+.splash-screen {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  z-index: 1000;
+  /* Dummy background image for now */
+  background: url('https://images.unsplash.com/photo-1542841324-ee4fdbcb0e40?q=80&w=2070&auto=format&fit=crop') no-repeat center center/cover;
   display: flex;
   justify-content: center;
   align-items: center;
-  /* Dummy background image from unsplash */
-  background: url('https://images.unsplash.com/photo-1542406775-ade59c4fdabd?q=80&w=2000&auto=format&fit=crop') no-repeat center center;
-  background-size: cover;
-  pointer-events: none;
-  transition: all 1s ease-in-out;
+  z-index: 9999;
+  transition: all 1s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-/* Semi-transparent overlay to ensure text is readable */
-.splash-container::before {
+/* Dark overlay to make logo readable */
+.splash-screen::before {
   content: '';
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.5);
   z-index: -1;
 }
 
 .splash-content {
   display: flex;
-  flex-direction: column;
   align-items: center;
   gap: 20px;
-  color: #ffffff;
-  transition: all 1s ease-in-out;
-  text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+  color: white;
+  transition: all 1s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-.splash-logo-placeholder {
-  width: 120px;
-  height: 120px;
+.splash-logo {
+  width: 100px;
+  height: 100px;
   background-color: var(--primary-color);
   border-radius: 50%;
-  transition: all 1s ease-in-out;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  transition: all 1s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .splash-title {
   font-size: 5rem;
   font-weight: bold;
-  letter-spacing: 2px;
-  transition: all 1s ease-in-out;
   margin: 0;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+  transition: all 1s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-/* Shrinking animation states */
-.splash-container.shrinking {
-  /* Animate to the top-left area where the navbar is */
-  /* This is an approximation of moving into the navbar */
+/* Animation class to shrink to navbar */
+.splash-screen.shrink {
+  background: transparent;
+  pointer-events: none;
+}
+
+.splash-screen.shrink::before {
   opacity: 0;
-  visibility: hidden;
-  transform: translateY(-50px);
+  transition: opacity 0.5s ease;
 }
 
-.splash-container.shrinking .splash-logo-placeholder {
+.splash-screen.shrink .splash-content {
+  /* Animate towards the top left where the navbar logo is */
+  transform: translate(calc(-50vw + 100px), calc(-50vh + 45px));
+}
+
+@media (max-width: 600px) {
+  .splash-screen.shrink .splash-content {
+    /* Mobile navbar logo is centered */
+    transform: translate(0, calc(-50vh + 50px));
+  }
+}
+
+.splash-screen.shrink .splash-logo {
   width: 30px;
   height: 30px;
 }
 
-.splash-container.shrinking .splash-title {
+.splash-screen.shrink .splash-title {
   font-size: 1.5rem;
-}
-
-.splash-container.shrinking .splash-content {
-  /* Move upwards and leftwards to match navbar */
-  transform: translate(-30vw, -40vh);
-  opacity: 0;
+  text-shadow: none;
+  color: var(--primary-color);
 }

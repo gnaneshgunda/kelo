@@ -141,10 +141,10 @@
   }
 
   .cart-badge {
-    top: -5px;
-    right: -8px;
-    width: 16px;
-    height: 16px;
+    top: -6px;
+    right: -12px;
+    width: 18px;
+    height: 18px;
     font-size: 0.65rem;
   }
 

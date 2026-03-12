@@ -1,231 +1,160 @@
-.hall-days-carousel-container {
-  width: 100%;
+.hall-specials-banner {
+  background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+  color: var(--white);
+  padding: 3rem 2rem;
   border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  margin-bottom: 3rem;
-  border: 1px solid rgba(139, 90, 43, 0.1);
-}
-
-.hall-days-slide {
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   position: relative;
-  width: 100%;
-  height: 400px;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  overflow: hidden;
   transition: background-image 0.5s ease-in-out;
-  display: flex;
-  align-items: center;
 }
 
-/* Dark overlay to make text readable */
-.hall-days-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    to right,
-    rgba(0,0,0,0.8) 0%,
-    rgba(0,0,0,0.5) 50%,
-    rgba(0,0,0,0) 100%
-  );
+.specials-content {
   display: flex;
   align-items: center;
-  padding: 0 4rem;
+  justify-content: space-between;
 }
 
-.hall-days-content {
-  color: #ffffff;
-  max-width: 500px;
-  z-index: 10;
+.special-card {
+  flex: 1;
+  text-align: center;
+  padding: 0 2rem;
+}
+
+.special-header {
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   gap: 15px;
+  margin-bottom: 1rem;
 }
 
-.hall-days-badge-container {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 5px;
-}
-
-.hall-days-label {
-  font-family: 'Georgia', serif;
+.special-header h3 {
+  margin: 0;
   font-size: 1.2rem;
-  font-weight: bold;
-  color: var(--secondary-color);
+  letter-spacing: 2px;
+  color: var(--background-color);
   text-transform: uppercase;
-  letter-spacing: 1px;
 }
 
-.hall-days-badge {
+.offer-badge {
   background-color: #e74c3c;
   color: white;
-  padding: 4px 8px;
+  padding: 4px 12px;
   border-radius: 4px;
-  font-size: 0.9rem;
   font-weight: bold;
+  font-size: 0.9rem;
 }
 
-.hall-days-title {
-  font-size: 3rem;
-  margin: 0;
-  line-height: 1.1;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+.special-product-name {
+  font-size: 2.5rem;
+  margin: 0.5rem 0;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
 }
 
-.hall-days-desc {
-  font-size: 1.1rem;
-  color: #e0e0e0;
-  margin: 0;
-  line-height: 1.4;
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
-}
-
-.hall-days-price-block {
+.special-price {
+  margin: 1rem 0;
   display: flex;
-  align-items: center;
+  align-items: baseline;
+  justify-content: center;
   gap: 15px;
-  margin-top: 10px;
 }
 
-.hall-original-price {
+.old-price {
   text-decoration: line-through;
-  color: #cccccc;
+  color: #bdc3c7;
   font-size: 1.2rem;
 }
 
-.hall-discounted-price {
-  color: #f1c40f;
-  font-weight: bold;
+.new-price {
   font-size: 2rem;
-  text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+  font-weight: bold;
+  color: #f1c40f;
 }
 
-.hall-days-shop-btn {
-  margin-top: 10px;
-  align-self: flex-start;
-  background-color: var(--primary-color);
-  color: white;
-  border: none;
-  padding: 12px 24px;
+.shop-now-btn {
+  background-color: transparent;
+  border: 2px solid var(--white);
+  color: var(--white);
+  padding: 10px 30px;
   font-size: 1.1rem;
   font-weight: bold;
-  border-radius: 30px;
+  border-radius: 25px;
   cursor: pointer;
-  transition: background-color 0.3s, transform 0.2s;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+  transition: all 0.3s ease;
+  margin-top: 1rem;
 }
 
-.hall-days-shop-btn:hover {
-  background-color: #6a411a;
-  transform: translateY(-2px);
+.shop-now-btn:hover {
+  background-color: var(--white);
+  color: var(--primary-color);
 }
 
-/* Navigation Arrows */
-.hall-nav-arrow {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background-color: rgba(255,255,255,0.2);
-  color: white;
+.carousel-control {
+  background: rgba(255, 255, 255, 0.2);
   border: none;
-  width: 50px;
-  height: 50px;
+  color: white;
+  font-size: 1.5rem;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s;
+}
+
+.carousel-control:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.carousel-indicators {
   display: flex;
   justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  z-index: 20;
-  transition: background-color 0.3s;
+  gap: 8px;
+  margin-top: 1.5rem;
 }
 
-.hall-nav-arrow:hover {
-  background-color: rgba(255,255,255,0.5);
-}
-
-.hall-nav-prev {
-  left: 10px;
-}
-
-.hall-nav-next {
-  right: 10px;
-}
-
-/* Navigation Dots */
-.hall-nav-dots {
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 10px;
-  z-index: 20;
-}
-
-.hall-nav-dot {
-  width: 12px;
-  height: 12px;
+.indicator {
+  width: 10px;
+  height: 10px;
+  background-color: rgba(255, 255, 255, 0.5);
   border-radius: 50%;
-  background-color: rgba(255,255,255,0.5);
-  border: none;
   cursor: pointer;
-  transition: background-color 0.3s, transform 0.3s;
+  transition: background 0.3s;
 }
 
-.hall-nav-dot:hover {
-  background-color: rgba(255,255,255,0.8);
-}
-
-.hall-nav-dot.active {
-  background-color: white;
+.indicator.active {
+  background-color: var(--white);
   transform: scale(1.2);
 }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .hall-days-slide {
-    height: 350px;
+@media (max-width: 600px) {
+  .hall-specials-banner {
+    padding: 1.5rem 1rem;
+    border-radius: 8px;
   }
 
-  .hall-days-overlay {
-    padding: 0 2rem;
-    background: linear-gradient(
-      to top,
-      rgba(0,0,0,0.9) 0%,
-      rgba(0,0,0,0.6) 50%,
-      rgba(0,0,0,0.2) 100%
-    );
-    align-items: flex-end;
-    padding-bottom: 3rem;
+  .special-product-name {
+    font-size: 1.8rem;
   }
 
-  .hall-days-content {
-    align-items: center;
-    text-align: center;
+  .special-header h3 {
+    font-size: 1rem;
   }
 
-  .hall-days-shop-btn {
-    align-self: center;
+  .new-price {
+    font-size: 1.5rem;
   }
 
-  .hall-days-title {
-    font-size: 2rem;
+  .special-card {
+    padding: 0 0.5rem;
   }
 
-  .hall-days-desc {
-    display: none; /* Hide description on mobile to save space */
-  }
-
-  .hall-nav-arrow {
-    width: 40px;
-    height: 40px;
-    font-size: 18px;
+  .shop-now-btn {
+    padding: 8px 20px;
+    font-size: 1rem;
   }
 }
