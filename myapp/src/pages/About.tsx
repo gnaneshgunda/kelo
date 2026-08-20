@@ -59,19 +59,19 @@ export default function About() {
         <h3 className="values-title">What Drives Us</h3>
         <div className="values-grid">
           <div className="value-item">
-            <div className="value-icon">🛠️</div>
-            <strong>Student-Made</strong>
-            <p>Directly designed and crafted by IIT KGP students, blending innovation with tradition.</p>
+            <div className="value-icon">🎉</div>
+            <strong>Occasion Based</strong>
+            <p>From Rakhi and Valentine's Day to birthdays, we craft the perfect themed gifts to make every special day unforgettable.</p>
           </div>
           <div className="value-item">
-            <div className="value-icon">💝</div>
-            <strong>Emotional Connection</strong>
-            <p>Every piece is tailored to maximise likability and emotional resonance for the recipient.</p>
+            <div className="value-icon">🏛️</div>
+            <strong>Hall Days & Events</strong>
+            <p>Deeply rooted in campus culture, we design custom pieces and bulk orders specifically for hall days and college events.</p>
           </div>
           <div className="value-item">
-            <div className="value-icon">🤝</div>
-            <strong>Empowering Craft</strong>
-            <p>Creating a sustainable platform for handmade products in a world of mass production.</p>
+            <div className="value-icon">🎨</div>
+            <strong>Themed Creations</strong>
+            <p>Every product revolves around a unique theme, ensuring your gift tells a cohesive and deeply personal story.</p>
           </div>
         </div>
       </section>
