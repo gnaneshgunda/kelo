@@ -8,9 +8,8 @@ export const DUMMY_PRODUCTS: Product[] = [
       'A beautifully handcrafted birthday card made with love and premium art paper. Adorned with intricate hand-drawn illustrations, pop-up elements, and a warm personal message space inside. Each card is one of a kind — no two are exactly alike.',
     price: 35.00,
     category: 'Cards',
-    imageUrl: 'https://images.unsplash.com/photo-1598124237583-3c970591f807?w=600&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1607344645866-009c320b63e0?w=600&q=80',
     images: [
-      'https://images.unsplash.com/photo-1598124237583-3c970591f807?w=600&q=80',
       'https://images.unsplash.com/photo-1607344645866-009c320b63e0?w=600&q=80',
       'https://images.unsplash.com/photo-1577048982768-5cb3e7ddfa23?w=600&q=80',
       'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?w=600&q=80',
@@ -62,9 +61,8 @@ export const DUMMY_PRODUCTS: Product[] = [
       'Stunning handmade bead bracelets crafted from ethically sourced glass and natural stone beads. Each bracelet is strung on durable elastic cord and finished with a brass toggle clasp. A perfect gift for loved ones or a treat for yourself.',
     price: 25.00,
     category: 'Bracelets',
-    imageUrl: 'https://images.unsplash.com/photo-1590487042502-d9f2e343b44b?w=600&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1611085583191-a3b181a88401?w=600&q=80',
     images: [
-      'https://images.unsplash.com/photo-1590487042502-d9f2e343b44b?w=600&q=80',
       'https://images.unsplash.com/photo-1611085583191-a3b181a88401?w=600&q=80',
       'https://images.unsplash.com/photo-1506439773649-6e0eb8cfb237?w=600&q=80',
       'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=600&q=80',
@@ -116,9 +114,8 @@ export const DUMMY_PRODUCTS: Product[] = [
       'A delightful set of mini greeting cards perfect for gift tags, thank-you notes, or little love notes. Each card is hand-illustrated with seasonal motifs. Comes in a pack of 10 with matching mini envelopes in assorted designs.',
     price: 30.00,
     category: 'Cards',
-    imageUrl: 'https://images.unsplash.com/photo-1599643477874-1296181f2150?w=600&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1617854818583-09e7f077a156?w=600&q=80',
     images: [
-      'https://images.unsplash.com/photo-1599643477874-1296181f2150?w=600&q=80',
       'https://images.unsplash.com/photo-1617854818583-09e7f077a156?w=600&q=80',
       'https://images.unsplash.com/photo-1607344645866-009c320b63e0?w=600&q=80',
       'https://images.unsplash.com/photo-1543346372-c68894cd1e68?w=600&q=80',
@@ -146,7 +143,6 @@ export const DUMMY_PRODUCTS: Product[] = [
     imageUrl: 'https://images.unsplash.com/photo-1603006905003-be475563bc59?w=600&q=80',
     images: [
       'https://images.unsplash.com/photo-1603006905003-be475563bc59?w=600&q=80',
-      'https://images.unsplash.com/photo-1598124237583-3c970591f807?w=600&q=80',
       'https://images.unsplash.com/photo-1607344645866-009c320b63e0?w=600&q=80',
       'https://images.unsplash.com/photo-1577048982768-5cb3e7ddfa23?w=600&q=80',
     ],

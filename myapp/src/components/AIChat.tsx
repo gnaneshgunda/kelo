@@ -6,7 +6,7 @@ import type { Product } from '../types';
 import './AIChat.css';
 
 const GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions';
-const GROQ_MODEL = 'llama-3.1-8b-instant';
+const GROQ_MODEL = 'llama3-8b-8192';
 
 interface ChatMessage {
   role: 'user' | 'assistant';
