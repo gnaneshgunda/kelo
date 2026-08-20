@@ -3,6 +3,7 @@ import { FaRobot, FaTimes, FaPaperPlane, FaCartPlus, FaPlus, FaMinus, FaMagic } 
 import { DUMMY_PRODUCTS } from '../data/products';
 import { useCart } from '../context/CartContext';
 import type { Product } from '../types';
+import ProductDetailModal from './ProductDetailModal';
 import './AIChat.css';
 
 const GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions';
@@ -44,13 +45,13 @@ function parseSuggestions(content: string): { text: string; productIds: string[]
   return { text, productIds: ids };
 }
 
-function ProductMiniCard({ product }: { product: Product }) {
+function ProductMiniCard({ product, onClick }: { product: Product; onClick: () => void }) {
   const { cartItems, addToCart, updateQuantity } = useCart();
   const cartItem = cartItems.find(ci => ci.product.id === product.id);
   const qty = cartItem ? cartItem.quantity : 0;
 
   return (
-    <div className="chat-product-card">
+    <div className="chat-product-card" onClick={onClick}>
       <img src={product.imageUrl} alt={product.name} className="chat-product-img" loading="lazy" />
       <div className="chat-product-info">
         <p className="chat-product-name">{product.name}</p>
@@ -83,6 +84,7 @@ export default function AIChat() {
   ]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -232,7 +234,7 @@ export default function AIChat() {
                 {msg.suggestedProducts && msg.suggestedProducts.length > 0 && (
                   <div className="chat-products-row">
                     {msg.suggestedProducts.map(p => (
-                      <ProductMiniCard key={p.id} product={p} />
+                      <ProductMiniCard key={p.id} product={p} onClick={() => setSelectedProduct(p)} />
                     ))}
                   </div>
                 )}
@@ -284,6 +286,14 @@ export default function AIChat() {
             </button>
           </div>
         </div>
+      )}
+
+      {/* Render Product Detail Modal if a product is selected */}
+      {selectedProduct && (
+        <ProductDetailModal
+          product={selectedProduct}
+          onClose={() => setSelectedProduct(null)}
+        />
       )}
     </>
   );
