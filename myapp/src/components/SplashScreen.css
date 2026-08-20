@@ -1,84 +1,90 @@
+/* ── Splash Screen ── */
 .splash-screen {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  /* Dummy background image for now */
-  background: url('https://images.unsplash.com/photo-1542841324-ee4fdbcb0e40?q=80&w=2070&auto=format&fit=crop') no-repeat center center/cover;
+  inset: 0;
+  background: linear-gradient(135deg, #1C0F05 0%, #3D1A08 50%, #1C0F05 100%);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 9999;
-  transition: all 1s cubic-bezier(0.25, 1, 0.5, 1);
+  transition: opacity 0.7s ease, transform 0.9s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-/* Dark overlay to make logo readable */
+/* Warm ambient glow in center */
 .splash-screen::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: -1;
+  inset: 0;
+  background: radial-gradient(ellipse 60% 50% at 50% 50%, rgba(193, 68, 14, 0.18) 0%, transparent 70%);
+  pointer-events: none;
 }
 
 .splash-content {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 20px;
-  color: white;
-  transition: all 1s cubic-bezier(0.25, 1, 0.5, 1);
+  gap: 1.5rem;
+  animation: splashFadeIn 0.8s ease forwards;
+  transition: all 0.9s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-.splash-logo {
-  width: 100px;
-  height: 100px;
-  background-color: var(--primary-color);
-  border-radius: 50%;
-  transition: all 1s cubic-bezier(0.25, 1, 0.5, 1);
+@keyframes splashFadeIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.splash-logo-img {
+  width: 110px;
+  height: 110px;
+  border-radius: 20px;
+  object-fit: cover;
+  box-shadow: 0 12px 48px rgba(193, 68, 14, 0.45), 0 0 0 3px rgba(255,255,255,0.08);
+  transition: all 0.9s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.splash-text-block {
+  text-align: center;
+  transition: all 0.9s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .splash-title {
-  font-size: 5rem;
-  font-weight: bold;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 5.5rem;
+  font-weight: 400;
+  letter-spacing: 12px;
+  color: #fff;
+  line-height: 1;
   margin: 0;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-  transition: all 1s cubic-bezier(0.25, 1, 0.5, 1);
+  transition: all 0.9s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-/* Animation class to shrink to navbar */
+.splash-subtitle {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+  letter-spacing: 2.5px;
+  color: rgba(255,255,255,0.55);
+  text-transform: uppercase;
+  margin-top: 6px;
+  transition: all 0.9s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* ── Shrink animation ── */
 .splash-screen.shrink {
-  background: transparent;
-  pointer-events: none;
-}
-
-.splash-screen.shrink::before {
   opacity: 0;
-  transition: opacity 0.5s ease;
+  pointer-events: none;
+  transform: scale(0.95);
 }
 
 .splash-screen.shrink .splash-content {
-  /* Animate towards the top left where the navbar logo is */
-  transform: translate(calc(-50vw + 100px), calc(-50vh + 45px));
+  transform: translate(calc(-50vw + 80px), calc(-50vh + 40px)) scale(0.15);
+  opacity: 0;
 }
 
 @media (max-width: 600px) {
+  .splash-title { font-size: 4rem; letter-spacing: 8px; }
+  .splash-logo-img { width: 80px; height: 80px; }
   .splash-screen.shrink .splash-content {
-    /* Mobile navbar logo is centered */
-    transform: translate(0, calc(-50vh + 50px));
+    transform: translate(0, calc(-50vh + 40px)) scale(0.15);
+    opacity: 0;
   }
-}
-
-.splash-screen.shrink .splash-logo {
-  width: 30px;
-  height: 30px;
-}
-
-.splash-screen.shrink .splash-title {
-  font-size: 1.5rem;
-  text-shadow: none;
-  color: var(--primary-color);
 }

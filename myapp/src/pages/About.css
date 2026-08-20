@@ -1,80 +1,311 @@
 .about-container {
-  max-width: 800px;
+  max-width: 1000px;
   margin: 0 auto;
-  padding: 4rem 2rem;
-  background-color: var(--white);
-  border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-}
-
-.about-content h2 {
-  font-size: 2.5rem;
-  color: var(--primary-color);
-  margin-bottom: 1.5rem;
-  font-family: 'Georgia', serif;
-  text-align: center;
-}
-
-.about-content p {
-  font-size: 1.1rem;
-  margin-bottom: 1.5rem;
+  padding: 2rem;
+  font-family: var(--font-body);
   color: var(--text-color);
-  line-height: 1.8;
-}
-
-.about-content .lead {
-  font-size: 1.35rem;
-  color: var(--text-light);
-  text-align: center;
-  font-style: italic;
-  margin-bottom: 3rem;
-}
-
-.about-values {
-  margin-top: 3rem;
-  padding-top: 2rem;
-  border-top: 1px solid var(--border-color);
-}
-
-.about-values h3 {
-  font-size: 1.8rem;
-  color: var(--primary-color);
-  margin-bottom: 1.5rem;
-  text-align: center;
-}
-
-.about-values ul {
-  list-style: none;
+  line-height: 1.7;
   display: flex;
   flex-direction: column;
+  gap: 4rem;
+}
+
+/* ── Hero ── */
+.about-hero {
+  text-align: center;
+  padding: 5rem 2rem;
+  background: linear-gradient(135deg, #1C0F05 0%, #3D1A08 60%, #1C0F05 100%);
+  border-radius: 24px;
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+.about-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(193, 68, 14, 0.25) 0%, transparent 70%);
+}
+
+.about-hero h1 {
+  font-family: var(--font-display);
+  font-size: 6rem;
+  letter-spacing: 16px;
+  color: #fff;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+  position: relative;
+}
+
+.tagline {
+  font-size: 1.3rem;
+  font-weight: 300;
+  letter-spacing: 1px;
+  opacity: 0.9;
+  margin-bottom: 0.4rem;
+  position: relative;
+}
+
+.hero-sub {
+  font-size: 0.9rem;
+  opacity: 0.6;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  position: relative;
+}
+
+/* ── Origin Story ── */
+.about-section { }
+
+.content-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+.text-content h2 {
+  font-family: var(--font-display);
+  font-size: 2.2rem;
+  letter-spacing: 3px;
+  color: var(--primary-color);
+  margin-bottom: 1.2rem;
+}
+
+.text-content p {
+  color: var(--text-light);
+  font-size: 0.97rem;
+  margin-bottom: 1rem;
+}
+.text-content p:last-child { margin-bottom: 0; }
+
+.about-image-wrap img {
+  width: 100%;
+  border-radius: 18px;
+  object-fit: cover;
+  aspect-ratio: 4/3;
+  box-shadow: 0 16px 48px rgba(193, 68, 14, 0.15);
+}
+
+.img-caption {
+  font-size: 0.82rem;
+  color: var(--text-light);
+  text-align: center;
+  margin-top: 0.75rem;
+  font-style: italic;
+}
+
+/* ── Philosophy ── */
+.philosophy-section { }
+
+.philosophy-card {
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+  padding: 3.5rem;
+  border-radius: 20px;
+  color: #fff;
+  text-align: center;
+  box-shadow: 0 12px 40px rgba(193, 68, 14, 0.3);
+}
+
+.philosophy-eyebrow {
+  display: inline-block;
+  font-size: 0.75rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  opacity: 0.7;
+  margin-bottom: 0.75rem;
+}
+
+.philosophy-card h3 {
+  font-family: var(--font-display);
+  font-size: 3rem;
+  letter-spacing: 4px;
+  margin-bottom: 1rem;
+}
+
+.philosophy-card p {
+  font-size: 1.05rem;
+  line-height: 1.8;
+  opacity: 0.92;
+  max-width: 620px;
+  margin: 0 auto;
+}
+
+/* ── Values ── */
+.values-title {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  letter-spacing: 4px;
+  color: var(--text-color);
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.values-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 1.5rem;
 }
 
-.about-values li {
-  font-size: 1.1rem;
-  background-color: var(--secondary-color);
-  padding: 1.5rem;
-  border-radius: 8px;
-  color: var(--text-color);
+.value-item {
+  background: var(--white);
+  padding: 2rem;
+  border-radius: 16px;
+  text-align: center;
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.value-item:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-md);
 }
 
-.about-values li strong {
-  color: var(--primary-color);
-  font-size: 1.2rem;
+.value-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.value-item strong {
   display: block;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--primary-color);
   margin-bottom: 0.5rem;
 }
 
+.value-item p {
+  font-size: 0.88rem;
+  color: var(--text-light);
+  line-height: 1.6;
+}
+
+/* ── Instagram Section ── */
+.instagram-section {
+  background: linear-gradient(135deg, #ffeaea 0%, #fff3ec 50%, #e8f7f5 100%);
+  border: 1px solid rgba(193, 68, 14, 0.12);
+  border-radius: 20px;
+  padding: 2.5rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.instagram-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.insta-left {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.insta-big-icon {
+  font-size: 3.5rem;
+  background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  flex-shrink: 0;
+}
+
+.insta-handle {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  letter-spacing: 2px;
+  color: var(--text-color);
+  margin-bottom: 4px;
+}
+
+.insta-tagline {
+  font-size: 0.88rem;
+  color: var(--text-light);
+  margin-bottom: 0.6rem;
+}
+
+.insta-stats {
+  display: flex;
+  gap: 1.5rem;
+  font-size: 0.88rem;
+  color: var(--text-light);
+}
+.insta-stats strong {
+  color: var(--text-color);
+  font-weight: 700;
+}
+
+.insta-follow-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0.85rem 1.8rem;
+  border-radius: 50px;
+  background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-decoration: none;
+  letter-spacing: 0.3px;
+  transition: opacity 0.25s, transform 0.25s, box-shadow 0.25s;
+  box-shadow: 0 6px 20px rgba(220, 39, 67, 0.35);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.insta-follow-btn:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(220, 39, 67, 0.45);
+}
+
+.insta-desc {
+  font-size: 0.9rem;
+  color: var(--text-light);
+  line-height: 1.7;
+}
+
+/* ── Join Callout ── */
+.team-callout {
+  text-align: center;
+  padding: 3rem 2rem;
+  border-top: 2px dashed var(--border-color);
+}
+
+.team-callout h3 {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  letter-spacing: 3px;
+  color: var(--text-color);
+  margin-bottom: 0.75rem;
+}
+
+.team-callout p {
+  font-size: 1rem;
+  color: var(--text-light);
+  margin-bottom: 1.5rem;
+}
+
+.callout-insta-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #dc2743;
+  font-weight: 600;
+  font-size: 1rem;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+.callout-insta-link:hover { opacity: 0.75; }
+
+/* ── Responsive ── */
 @media (max-width: 768px) {
-  .about-container {
-    padding: 2.5rem 1.5rem;
-  }
-
-  .about-content h2 {
-    font-size: 2rem;
-  }
-
-  .about-content .lead {
-    font-size: 1.15rem;
-  }
+  .content-grid { grid-template-columns: 1fr; }
+  .about-hero h1 { font-size: 4rem; letter-spacing: 10px; }
+  .philosophy-card { padding: 2.5rem 1.5rem; }
+  .philosophy-card h3 { font-size: 2.2rem; }
+  .instagram-inner { flex-direction: column; align-items: flex-start; }
+  .about-container { padding: 1rem; gap: 3rem; }
 }

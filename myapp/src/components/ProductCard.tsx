@@ -1,6 +1,8 @@
+import { useState } from 'react';
 import type { Product } from '../types';
 import { useCart } from '../context/CartContext';
-import { FaCartPlus, FaPlus, FaMinus } from 'react-icons/fa';
+import { FaCartPlus, FaPlus, FaMinus, FaStar } from 'react-icons/fa';
+import ProductDetailModal from './ProductDetailModal';
 import './ProductCard.css';
 
 interface ProductCardProps {
@@ -9,51 +11,69 @@ interface ProductCardProps {
 
 export default function ProductCard({ product }: ProductCardProps) {
   const { cartItems, addToCart, updateQuantity } = useCart();
+  const [showDetail, setShowDetail] = useState(false);
 
   const cartItem = cartItems.find((item) => item.product.id === product.id);
   const quantity = cartItem ? cartItem.quantity : 0;
 
-  const handleAdd = () => {
+  const handleAdd = (e: React.MouseEvent) => {
+    e.stopPropagation();
     addToCart(product);
   };
 
-  const handleIncrement = () => {
+  const handleIncrement = (e: React.MouseEvent) => {
+    e.stopPropagation();
     updateQuantity(product.id, quantity + 1);
   };
 
-  const handleDecrement = () => {
+  const handleDecrement = (e: React.MouseEvent) => {
+    e.stopPropagation();
     updateQuantity(product.id, quantity - 1);
   };
 
   return (
-    <div className="product-card">
-      <div className="product-image-container">
-        <img src={product.imageUrl} alt={product.name} className="product-image" />
-        <span className="product-category-badge">{product.category}</span>
-      </div>
-      <div className="product-info">
-        <h3 className="product-name">{product.name}</h3>
-        <p className="product-description">{product.description}</p>
-        <div className="product-bottom-row">
-          <span className="product-price">${product.price.toFixed(2)}</span>
-
-          {quantity > 0 ? (
-            <div className="product-quantity-controls">
-              <button className="qty-btn" onClick={handleDecrement} aria-label="Decrease quantity">
-                <FaMinus />
-              </button>
-              <span className="qty-display">{quantity}</span>
-              <button className="qty-btn" onClick={handleIncrement} aria-label="Increase quantity">
-                <FaPlus />
-              </button>
+    <>
+      <div className="product-card" onClick={() => setShowDetail(true)} role="button" tabIndex={0} onKeyDown={(e) => e.key === 'Enter' && setShowDetail(true)}>
+        <div className="product-image-container">
+          <img src={product.imageUrl} alt={product.name} className="product-image" loading="lazy" />
+          <span className="product-category-badge">{product.category}</span>
+          <span className="view-detail-hint">View Details</span>
+        </div>
+        <div className="product-info">
+          <h3 className="product-name">{product.name}</h3>
+          {product.rating && (
+            <div className="card-rating">
+              <FaStar className="card-star" />
+              <span>{product.rating.toFixed(1)}</span>
+              {product.reviews && <span className="card-reviews">({product.reviews})</span>}
             </div>
-          ) : (
-            <button className="add-to-cart-btn" onClick={handleAdd}>
-              <FaCartPlus /> Add to Cart
-            </button>
           )}
+          <p className="product-description">{product.description}</p>
+          <div className="product-bottom-row">
+            <span className="product-price">₹{product.price.toFixed(2)}</span>
+
+            {quantity > 0 ? (
+              <div className="product-quantity-controls">
+                <button className="qty-btn" onClick={handleDecrement} aria-label="Decrease quantity">
+                  <FaMinus />
+                </button>
+                <span className="qty-display">{quantity}</span>
+                <button className="qty-btn" onClick={handleIncrement} aria-label="Increase quantity">
+                  <FaPlus />
+                </button>
+              </div>
+            ) : (
+              <button className="add-to-cart-btn" onClick={handleAdd}>
+                <FaCartPlus /> Add to Cart
+              </button>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+
+      {showDetail && (
+        <ProductDetailModal product={product} onClose={() => setShowDetail(false)} />
+      )}
+    </>
   );
 }

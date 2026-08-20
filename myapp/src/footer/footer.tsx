@@ -9,7 +9,7 @@ export default function Footer() {
           <p>&copy; {new Date().getFullYear()} KeLo. All rights reserved.</p>
         </div>
         <div className="footer-right">
-          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="social-icon">
+          <a href="https://www.instagram.com/kelo.keylove/" target="_blank" rel="noopener noreferrer" className="social-icon">
             <FaInstagram />
           </a>
           <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="social-icon">

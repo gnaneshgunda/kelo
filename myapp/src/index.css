@@ -1,13 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap');
+
 :root {
-  --primary-color: #8B5A2B;
-  --primary-hover: #A0522D;
-  --secondary-color: #f4e8d3;
-  --text-color: #333;
-  --text-light: #666;
-  --background-light: #faf8f5;
+  /* ── Brand Colors ── */
+  --primary-color: #C1440E;
+  --primary-hover: #A83409;
+  --secondary-color: #FFF3EC;
+  --accent-teal: #2A7C6F;
+  --accent-teal-hover: #1F6159;
+
+  /* ── Neutrals ── */
+  --text-color: #1C1C1C;
+  --text-light: #6B6560;
+  --background-light: #FFFAF7;
   --white: #ffffff;
-  --border-color: #e0d5c1;
+  --border-color: #EDD9CE;
   --danger-color: #c94c4c;
+
+  /* ── Typography ── */
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-body: 'Inter', sans-serif;
+
+  /* ── Shadows ── */
+  --shadow-sm: 0 2px 8px rgba(193, 68, 14, 0.08);
+  --shadow-md: 0 8px 24px rgba(193, 68, 14, 0.12);
+  --shadow-lg: 0 20px 48px rgba(193, 68, 14, 0.18);
 }
 
 * {
@@ -21,10 +37,13 @@ body, html {
 }
 
 body {
-  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-family: var(--font-body);
   color: var(--text-color);
   background-color: var(--background-light);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
   line-height: 1.6;
+  /* Fluid base font size */
+  font-size: clamp(14px, 1.8vw, 16px);
 }
 
 #root {
@@ -46,21 +65,23 @@ a {
 
 .main-content {
   flex: 1;
-  padding: 2rem;
+  padding: clamp(1rem, 3vw, 2rem);
   max-width: 1200px;
   margin: 0 auto;
   width: 100%;
 }
 
+/* Fluid heading utility */
+h1, h2, h3 {
+  line-height: 1.2;
+}
+
 @media (max-width: 600px) {
   .app-container {
-    /* Add extra padding to account for the bottom fixed mobile navbar so footer shows */
     padding-bottom: 70px;
   }
 
   .main-content {
-    padding-left: 1rem;
-    padding-right: 1rem;
-    padding-bottom: 1rem;
+    padding: 1rem 0.85rem;
   }
 }
