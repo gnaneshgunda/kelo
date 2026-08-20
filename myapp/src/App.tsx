@@ -7,6 +7,7 @@ import About from './pages/About.tsx';
 import CartPage from './pages/CartPage.tsx';
 import { CartProvider } from './context/CartContext.tsx';
 import SplashScreen from './components/SplashScreen.tsx';
+import AIChat from './components/AIChat.tsx';
 
 function App() {
   return (
@@ -23,8 +24,11 @@ function App() {
         </main>
         <Footer />
       </div>
+      {/* Floating AI Shopping Assistant */}
+      <AIChat />
     </CartProvider>
   );
 }
 
 export default App;
+
