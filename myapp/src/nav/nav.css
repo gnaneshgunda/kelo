@@ -98,7 +98,7 @@
 }
 
 .logo-title {
-  font-family: var(--font-display, 'Bebas Neue', sans-serif);
+  font-family: 'Libre Bodoni', 'Bodoni FLF', Georgia, serif;
   font-size: 2.1rem;
   letter-spacing: 3.5px;
   color: #2D1B0E;

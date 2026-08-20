@@ -1,0 +1,152 @@
+[
+  {
+    "id": "p1",
+    "name": "Birthday Card",
+    "description": "A beautifully handcrafted birthday card made with love and premium art paper. Adorned with intricate hand-drawn illustrations, pop-up elements, and a warm personal message space inside. Each card is one of a kind — no two are exactly alike.",
+    "price": 35.00,
+    "category": "Cards",
+    "imageUrl": "/src/data/Heart-frame.jpeg",
+    "images": [
+      "/src/data/Heart-frame.jpeg",
+      "/src/assets/products/birthday-card-2.jpg",
+      "/src/assets/products/birthday-card-3.jpg"
+    ],
+    "rating": 4.8,
+    "reviews": 142,
+    "highlights": [
+      "Handcrafted using premium 300gsm art paper",
+      "Features pop-up 3D design elements",
+      "Blank interior for your personal message",
+      "Comes with matching kraft envelope",
+      "Eco-friendly, non-toxic inks"
+    ],
+    "material": "Premium Art Paper, Natural Inks",
+    "dimensions": "15 cm × 10 cm (folded)",
+    "deliveryInfo": "Ready to ship in 1–2 business days"
+  },
+  {
+    "id": "p2",
+    "name": "Photo Frames",
+    "description": "Artisan-crafted rustic wooden photo frames that bring warmth and personality to any space. Hand-polished with natural beeswax for a smooth finish. Available in portrait and landscape orientation, perfect for cherishing your most precious memories.",
+    "price": 45.00,
+    "category": "Frames",
+    "imageUrl": "/src/assets/products/photo-frame.jpg",
+    "images": [
+      "/src/assets/products/photo-frame.jpg",
+      "/src/assets/products/photo-frame-2.jpg",
+      "/src/assets/products/photo-frame-3.jpg"
+    ],
+    "rating": 4.6,
+    "reviews": 98,
+    "highlights": [
+      "Handcrafted from natural mango wood",
+      "Polished with food-safe beeswax finish",
+      "Fits standard 4×6 inch photos",
+      "Includes velvet backing & easel stand",
+      "Each piece has a unique wood grain pattern"
+    ],
+    "material": "Mango Wood, Beeswax Polish",
+    "dimensions": "16 cm × 21 cm (portrait)",
+    "deliveryInfo": "Ships within 2–3 business days"
+  },
+  {
+    "id": "p3",
+    "name": "Bead Bracelets",
+    "description": "Stunning handmade bead bracelets crafted from ethically sourced glass and natural stone beads. Each bracelet is strung on durable elastic cord and finished with a brass toggle clasp. A perfect gift for loved ones or a treat for yourself.",
+    "price": 25.00,
+    "category": "Bracelets",
+    "imageUrl": "/src/assets/products/bead-bracelet.jpg",
+    "images": [
+      "/src/assets/products/bead-bracelet.jpg",
+      "/src/assets/products/bead-bracelet-2.jpg",
+      "/src/assets/products/bead-bracelet-3.jpg"
+    ],
+    "rating": 4.7,
+    "reviews": 213,
+    "highlights": [
+      "Set of 3 bracelets in complementary colors",
+      "Ethically sourced glass & natural stone beads",
+      "Strung on premium elastic cord",
+      "Brass toggle clasp for easy wear",
+      "Comes in a premium gift box"
+    ],
+    "material": "Glass Beads, Natural Stone, Brass Clasp",
+    "dimensions": "Adjustable, fits wrists 15–20 cm",
+    "deliveryInfo": "Ready to ship in 1 business day"
+  },
+  {
+    "id": "p4",
+    "name": "Scrap Book",
+    "description": "A beautifully bound handmade scrapbook with thick recycled pages, perfect for preserving memories, journaling, or as a one-of-a-kind gift. The covers are adorned with hand-stamped designs and secured with a natural jute ribbon.",
+    "price": 60.00,
+    "category": "Books",
+    "imageUrl": "/src/assets/products/scrap-book.jpg",
+    "images": [
+      "/src/assets/products/scrap-book.jpg",
+      "/src/assets/products/scrap-book-2.jpg",
+      "/src/assets/products/scrap-book-3.jpg"
+    ],
+    "rating": 4.9,
+    "reviews": 87,
+    "highlights": [
+      "60 pages of thick 180gsm recycled paper",
+      "Hand-stamped decorative cover",
+      "Lay-flat binding for easy writing",
+      "Secured with a natural jute ribbon closure",
+      "Ideal for memories, journaling, or gifting"
+    ],
+    "material": "Recycled Paper, Jute Ribbon, Natural Dyes",
+    "dimensions": "22 cm × 28 cm, 60 pages",
+    "deliveryInfo": "Ships within 2–3 business days"
+  },
+  {
+    "id": "p5",
+    "name": "Mini Cards",
+    "description": "A delightful set of mini greeting cards perfect for gift tags, thank-you notes, or little love notes. Each card is hand-illustrated with seasonal motifs. Comes in a pack of 10 with matching mini envelopes in assorted designs.",
+    "price": 30.00,
+    "category": "Cards",
+    "imageUrl": "/src/assets/products/mini-cards.jpg",
+    "images": [
+      "/src/assets/products/mini-cards.jpg",
+      "/src/assets/products/mini-cards-2.jpg",
+      "/src/assets/products/mini-cards-3.jpg"
+    ],
+    "rating": 4.5,
+    "reviews": 176,
+    "highlights": [
+      "Pack of 10 assorted hand-illustrated mini cards",
+      "Each card measures 7 cm × 5 cm",
+      "Includes 10 matching mini envelopes",
+      "Printed on 250gsm matte finish card stock",
+      "Non-toxic, eco-friendly inks"
+    ],
+    "material": "Premium Card Stock, Eco Inks",
+    "dimensions": "7 cm × 5 cm per card",
+    "deliveryInfo": "Ready to ship in 1 business day"
+  },
+  {
+    "id": "p6",
+    "name": "Shinchan Card",
+    "description": "A quirky, hand-illustrated Shinchan-themed greeting card that will bring a big smile to any fan! The inside features a personalizable message area with cute Shinchan doodles throughout. A guaranteed crowd-pleaser for kids and adults alike.",
+    "price": 18.00,
+    "category": "Cards",
+    "imageUrl": "/src/assets/products/shinchan-card.jpg",
+    "images": [
+      "/src/assets/products/shinchan-card.jpg",
+      "/src/assets/products/shinchan-card-2.jpg",
+      "/src/assets/products/shinchan-card-3.jpg"
+    ],
+    "rating": 4.9,
+    "reviews": 304,
+    "highlights": [
+      "Hand-illustrated Shinchan artwork on front",
+      "Interior filled with cute doodles",
+      "Personalizable message area inside",
+      "Printed on 300gsm art card",
+      "Comes with matching envelope"
+    ],
+    "material": "300gsm Art Card, Non-toxic Inks",
+    "dimensions": "15 cm × 10 cm (folded)",
+    "deliveryInfo": "Ready to ship in 1 business day"
+  }
+]

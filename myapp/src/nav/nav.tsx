@@ -31,7 +31,7 @@ export default function Nav() {
             </div>
             <div className="logo-text-wrapper">
               <span className="logo-title">KELO</span>
-              <span className="logo-subtitle">Key to your Unexpressed love</span>
+              <span className="logo-subtitle">The key to your Unexpressed love</span>
             </div>
           </Link>
 
