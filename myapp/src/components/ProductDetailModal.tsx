@@ -27,7 +27,6 @@ function StarRating({ rating }: { rating: number }) {
 
 export default function ProductDetailModal({ product, onClose }: ProductDetailModalProps) {
   const { cartItems, addToCart, updateQuantity } = useCart();
-  const allImages = product.images && product.images.length > 0 ? product.images : [product.imageUrl];
   const [activeImg, setActiveImg] = useState(0);
   const [zoom, setZoom] = useState(false);
   const [zoomPos, setZoomPos] = useState({ x: 50, y: 50 });
