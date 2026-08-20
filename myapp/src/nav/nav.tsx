@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { FaShoppingCart, FaHome, FaInfoCircle } from 'react-icons/fa';
-import keloLogo from '../assets/kelo_logo.jpeg';
+import keloLogoOld from '../assets/kelo_logo.jpeg';
+import logoNav from '../assets/logo-nav.jpeg';
 import './nav.css';
 
 export default function Nav() {
@@ -11,8 +12,13 @@ export default function Nav() {
     <nav className="navbar">
       <div className="navbar-container">
         <Link to="/" className="navbar-logo">
-          <img src={keloLogo} alt="KELO Logo" className="logo-img" />
-          <h1 className="logo-title">KELO</h1>
+          {/* Desktop logo */}
+          <div className="logo-desktop-container">
+            <img src={keloLogoOld} alt="KELO Logo" className="logo-img-old" />
+            <h1 className="logo-title">KELO</h1>
+          </div>
+          {/* Mobile logo */}
+          <h1 className="logo-title-mobile">KELO</h1>
         </Link>
         <ul className="nav-menu">
           <li className="nav-item">

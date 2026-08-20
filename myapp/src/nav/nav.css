@@ -1,5 +1,5 @@
 .navbar {
-  background-color: var(--white);
+  background-color: rgba(228, 214, 195, 1);
   border-bottom: 1.5px solid var(--border-color);
   position: sticky;
   top: 0;
@@ -25,7 +25,13 @@
   flex-shrink: 0;
 }
 
-.logo-img {
+.logo-desktop-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-img-old {
   width: 44px;
   height: 44px;
   border-radius: 10px;
@@ -33,24 +39,33 @@
   filter: drop-shadow(0 3px 8px rgba(193, 68, 14, 0.32));
   transition: filter 0.3s, transform 0.3s;
 }
-.navbar-logo:hover .logo-img {
+.navbar-logo:hover .logo-img-old {
   filter: drop-shadow(0 5px 14px rgba(193, 68, 14, 0.5));
   transform: rotate(-2deg) scale(1.04);
 }
-
-.logo-placeholder { display: none; }
 
 .logo-title {
   font-family: var(--font-display);
   font-size: 2rem;
   font-weight: 400;
   letter-spacing: 5px;
-  color: var(--primary-color);
+  color: rgba(70, 40, 10, 1);
   text-transform: uppercase;
   line-height: 1;
   transition: color 0.3s;
 }
 .navbar-logo:hover .logo-title { color: var(--primary-hover); }
+
+.logo-title-mobile {
+  display: none;
+  font-family: var(--font-display);
+  font-size: 2.4rem;
+  font-weight: 400;
+  letter-spacing: 4px;
+  color: rgba(70, 40, 10, 1);
+  text-transform: uppercase;
+  line-height: 1;
+}
 
 /* ── Desktop nav links ── */
 .nav-menu {
@@ -132,15 +147,12 @@
     gap: 0;
   }
 
-  /* Logo: smaller on mobile */
-  .logo-img {
-    width: 36px;
-    height: 36px;
-    border-radius: 8px;
+  /* Logo toggle */
+  .logo-desktop-container {
+    display: none;
   }
-  .logo-title {
-    font-size: 1.55rem;
-    letter-spacing: 4px;
+  .logo-title-mobile {
+    display: block;
   }
   .navbar-logo { gap: 8px; }
 
@@ -148,7 +160,7 @@
   .nav-menu {
     position: static;            /* NOT fixed — stays inline in the header */
     flex-direction: row;
-    gap: 0;
+    gap: 1.5rem;                 /* Adds clean spacing between icons */
     height: auto;
     background: none;
     border: none;
@@ -164,20 +176,14 @@
   }
 
   .nav-links {
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
-    gap: 2px;
-    font-size: 0.6rem;
-    font-weight: 600;
-    color: var(--text-light);
-    letter-spacing: 0;
-    padding: 0.4rem 0.7rem;
-    border-radius: 10px;
-    transition: background 0.2s, color 0.2s;
+    padding: 0;
+    background: transparent;
   }
   .nav-links::after { display: none; }
   .nav-links:hover {
-    background: var(--secondary-color);
+    background: transparent;
     color: var(--primary-color);
   }
 
@@ -190,6 +196,8 @@
   .nav-links:hover .nav-icon { color: var(--primary-color); }
 
   .cart-icon { font-size: 1.3rem; }
+  .cart-link { gap: 0; padding: 0 !important; margin: 0; }
+  .cart-icon-container { padding: 0; margin: 0; width: fit-content; }
   .cart-badge {
     top: -6px;
     right: -8px;
