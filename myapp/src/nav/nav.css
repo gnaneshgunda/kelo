@@ -1,10 +1,45 @@
-.navbar {
-  background-color: rgba(228, 214, 195, 1);
-  border-bottom: 1.5px solid var(--border-color);
+.navbar-header {
   position: sticky;
   top: 0;
-  z-index: 500;
-  box-shadow: 0 2px 16px rgba(193, 68, 14, 0.07);
+  z-index: 1000;
+  width: 100%;
+}
+
+/* ── Top Announcement Banner ── */
+.top-banner {
+  background: linear-gradient(90deg, #3C2212 0%, #2A170B 100%);
+  color: #F7EBE1;
+  font-size: 0.75rem;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  font-weight: 500;
+  padding: 0.35rem 1rem;
+  text-align: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.top-banner-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.banner-divider {
+  color: var(--primary-color, #C1440E);
+  opacity: 0.8;
+}
+
+/* ── Main Navigation Bar ── */
+.navbar {
+  background-color: rgba(253, 248, 243, 0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(220, 198, 182, 0.55);
+  box-shadow: 0 4px 20px -2px rgba(60, 30, 10, 0.04), 0 2px 6px -1px rgba(193, 68, 14, 0.03);
+  transition: all 0.3s ease;
 }
 
 .navbar-container {
@@ -13,199 +48,330 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.65rem 2rem;
+  padding: 0.65rem 1.5rem;
+  height: 78px;
 }
 
-/* ── Logo ── */
+/* ── Logo Section ── */
 .navbar-logo {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 0.85rem;
   text-decoration: none;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.logo-badge {
+  width: 58px;
+  height: 58px;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(60, 30, 10, 0.14);
+  border: 1.5px solid rgba(193, 68, 14, 0.2);
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   flex-shrink: 0;
 }
 
-.logo-desktop-container {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+.logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
 }
 
-.logo-img-old {
-  width: 44px;
-  height: 44px;
-  border-radius: 10px;
-  object-fit: cover;
-  filter: drop-shadow(0 3px 8px rgba(193, 68, 14, 0.32));
-  transition: filter 0.3s, transform 0.3s;
+.navbar-logo:hover .logo-badge {
+  transform: scale(1.05) rotate(-2deg);
+  border-color: var(--primary-color, #C1440E);
+  box-shadow: 0 6px 18px rgba(193, 68, 14, 0.25);
 }
-.navbar-logo:hover .logo-img-old {
-  filter: drop-shadow(0 5px 14px rgba(193, 68, 14, 0.5));
-  transform: rotate(-2deg) scale(1.04);
+
+.logo-text-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  line-height: 1.1;
 }
 
 .logo-title {
-  font-family: var(--font-display);
-  font-size: 2rem;
-  font-weight: 400;
-  letter-spacing: 5px;
-  color: rgba(70, 40, 10, 1);
+  font-family: var(--font-display, 'Bebas Neue', sans-serif);
+  font-size: 2.1rem;
+  letter-spacing: 3.5px;
+  color: #2D1B0E;
   text-transform: uppercase;
-  line-height: 1;
-  transition: color 0.3s;
-}
-.navbar-logo:hover .logo-title { color: var(--primary-hover); }
-
-.logo-title-mobile {
-  display: none;
-  font-family: var(--font-display);
-  font-size: 2.4rem;
   font-weight: 400;
-  letter-spacing: 4px;
-  color: rgba(70, 40, 10, 1);
-  text-transform: uppercase;
-  line-height: 1;
+  transition: color 0.25s ease;
 }
 
-/* ── Desktop nav links ── */
+.logo-subtitle {
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 0.72rem;
+  font-weight: 500;
+  font-style: italic;
+  letter-spacing: 0.4px;
+  color: #8C6A54;
+  margin-top: 1px;
+}
+
+.navbar-logo:hover .logo-title {
+  color: var(--primary-color, #C1440E);
+}
+
+/* ── Nav Menu & Items ── */
 .nav-menu {
   display: flex;
   list-style: none;
-  gap: 2rem;
+  gap: 1.25rem;
   align-items: center;
   margin: 0;
   padding: 0;
 }
 
+.nav-item {
+  display: flex;
+  align-items: center;
+}
+
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 7px;
-  color: var(--text-color);
+  gap: 0.5rem;
+  color: #3C2B20;
   font-weight: 500;
-  font-size: 0.92rem;
-  letter-spacing: 0.3px;
-  transition: color 0.25s;
+  font-size: 0.95rem;
+  letter-spacing: 0.4px;
+  padding: 0.5rem 0.9rem;
+  border-radius: 8px;
+  transition: all 0.2s ease;
   position: relative;
-  padding-bottom: 3px;
+  text-decoration: none;
   white-space: nowrap;
 }
+
 .nav-links::after {
   content: '';
   position: absolute;
-  bottom: -2px;
-  left: 0; right: 0;
+  bottom: 2px;
+  left: 50%;
+  width: 0;
   height: 2px;
-  background: var(--primary-color);
-  transform: scaleX(0);
-  transition: transform 0.25s ease;
+  background-color: var(--primary-color, #C1440E);
+  transition: width 0.25s ease, left 0.25s ease;
   border-radius: 2px;
 }
-.nav-links:hover { color: var(--primary-color); }
-.nav-links:hover::after { transform: scaleX(1); }
 
-.nav-icon { display: none; font-size: 1.25rem; }
+.nav-links:hover {
+  color: var(--primary-color, #C1440E);
+  background-color: rgba(193, 68, 14, 0.05);
+}
 
-/* ── Cart badge ── */
-.cart-link { display: flex; align-items: center; gap: 5px; }
-.cart-icon-container { position: relative; display: flex; align-items: center; }
-.cart-icon { display: block; font-size: 1.25rem; }
+.nav-links:hover::after {
+  width: 60%;
+  left: 20%;
+}
+
+.nav-links.active {
+  color: var(--primary-color, #C1440E);
+  font-weight: 600;
+  background-color: rgba(193, 68, 14, 0.08);
+}
+
+.nav-links.active::after {
+  width: 70%;
+  left: 15%;
+}
+
+.nav-icon {
+  display: inline-block;
+  font-size: 1.1rem;
+  opacity: 0.85;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.nav-links:hover .nav-icon {
+  opacity: 1;
+  transform: translateY(-1px);
+}
+
+/* ── Cart Link (single pill, no extra wrapper) ── */
+.cart-link {
+  position: relative;
+  padding: 0.55rem 0.9rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(60, 34, 18, 0.08);
+  box-shadow: 0 2px 10px rgba(60, 34, 18, 0.04);
+  transition: all 0.2s ease;
+}
+
+.cart-link:hover {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: rgba(193, 68, 14, 0.18);
+  box-shadow: 0 6px 14px rgba(60, 34, 18, 0.08);
+  transform: translateY(-1px);
+}
+
+.cart-link.active {
+  background: rgba(255, 255, 255, 0.92);
+  border-color: rgba(193, 68, 14, 0.2);
+  box-shadow: 0 6px 14px rgba(193, 68, 14, 0.08);
+}
 
 .cart-badge {
   position: absolute;
-  top: -8px;
-  right: -10px;
-  background: var(--primary-color);
-  color: #fff;
-  font-size: 0.65rem;
-  border-radius: 50%;
-  width: 17px;
-  height: 17px;
+  top: -6px;
+  right: -8px;
+  background: linear-gradient(135deg, #c1440e, #d75b1a);
+  color: #ffffff;
+  font-size: 0.62rem;
+  border-radius: 999px;
+  padding: 0 5px;
+  min-width: 18px;
+  height: 18px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 700;
+  line-height: 1;
+  box-shadow: 0 4px 10px rgba(193, 68, 14, 0.25);
+  border: 2px solid #fffdfb;
+  animation: badgePop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-/* ════════════════════════════════════════
-   MOBILE — compact sticky top bar
-   logo left · nav links right (icons only)
-   ════════════════════════════════════════ */
-@media (max-width: 600px) {
-  .navbar {
-    position: sticky;
-    top: 0;
-    box-shadow: 0 2px 12px rgba(193, 68, 14, 0.1);
-    border-bottom: 1.5px solid var(--border-color);
+@keyframes badgePop {
+  0% { transform: scale(0.6); }
+  60% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+/* ── Tablet Adjustments (max-width: 1024px) ── */
+@media (max-width: 1024px) {
+  .navbar-container {
+    padding: 0.6rem 1.25rem;
+    height: 72px;
+  }
+  .logo-badge {
+    width: 48px;
+    height: 48px;
+  }
+  .logo-title {
+    font-size: 1.9rem;
+  }
+  .logo-subtitle {
+    font-size: 0.65rem;
+  }
+  .nav-menu {
+    gap: 0.85rem;
+  }
+}
+
+/* ── Tablet Small / Mobile (max-width: 768px) ── */
+@media (max-width: 768px) {
+  .top-banner {
+    font-size: 0.7rem;
+    padding: 0.3rem 0.5rem;
+  }
+  .top-banner-content {
+    gap: 0.5rem;
+  }
+}
+
+/* ── Compact Mobile Header (max-width: 640px) ── */
+@media (max-width: 640px) {
+  .top-banner-content span:first-child {
+    display: none;
+  }
+  .banner-divider {
+    display: none;
+  }
+  .top-banner {
+    padding: 0.3rem 0.75rem;
+    font-size: 0.68rem;
+    letter-spacing: 0.5px;
   }
 
   .navbar-container {
-    flex-direction: row;          /* logo LEFT, icons RIGHT — always horizontal */
-    padding: 0.5rem 1rem;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0;
+    height: 62px;
+    padding: 0.5rem 0.85rem;
+    gap: 0.5rem;
   }
 
-  /* Logo toggle */
-  .logo-desktop-container {
-    display: none;
+  .logo-badge {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
   }
-  .logo-title-mobile {
-    display: block;
-  }
-  .navbar-logo { gap: 8px; }
 
-  /* Nav menu: horizontal icon-only bar on the right */
+  .logo-title {
+    font-size: 1.6rem;
+    letter-spacing: 2px;
+  }
+
+  .logo-subtitle {
+    font-size: 0.55rem;
+    letter-spacing: 0.2px;
+  }
+
   .nav-menu {
-    position: static;            /* NOT fixed — stays inline in the header */
-    flex-direction: row;
-    gap: 1.5rem;                 /* Adds clean spacing between icons */
-    height: auto;
-    background: none;
-    border: none;
-    box-shadow: none;
-    padding: 0;
-    width: auto;
-    justify-content: flex-end;
-  }
-
-  .nav-item {
-    flex: 0 0 auto;
-    display: flex;
+    gap: 0.4rem;
   }
 
   .nav-links {
-    flex-direction: row;
-    align-items: center;
+    width: 44px;
+    height: 44px;
     padding: 0;
-    background: transparent;
-  }
-  .nav-links::after { display: none; }
-  .nav-links:hover {
-    background: transparent;
-    color: var(--primary-color);
+    justify-content: center;
+    border-radius: 12px;
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    transition: background-color 0.2s ease, transform 0.15s ease;
   }
 
-  /* Show icons on mobile */
+  .nav-links::after {
+    display: none !important;
+  }
+
+  .nav-links:active {
+    transform: scale(0.95);
+  }
+
+  .nav-text {
+    display: none;
+  }
+
   .nav-icon {
     display: block;
-    font-size: 1.3rem;
-    color: var(--text-color);
+    font-size: 1.25rem;
   }
-  .nav-links:hover .nav-icon { color: var(--primary-color); }
 
-  .cart-icon { font-size: 1.3rem; }
-  .cart-link { gap: 0; padding: 0 !important; margin: 0; }
-  .cart-icon-container { padding: 0; margin: 0; width: fit-content; }
   .cart-badge {
-    top: -6px;
-    right: -8px;
-    width: 16px;
-    height: 16px;
+    top: -4px;
+    right: -4px;
+    min-width: 17px;
+    height: 17px;
     font-size: 0.6rem;
+    padding: 0 4px;
   }
+}
 
-  /* nav-text labels hidden to keep it tight */
-  .nav-text { display: none; }
+/* ── Narrow Mobile Screens (max-width: 380px) ── */
+@media (max-width: 380px) {
+  .logo-subtitle {
+    font-size: 0.5rem;
+  }
+  .navbar-container {
+    padding: 0.4rem 0.65rem;
+  }
+  .nav-menu {
+    gap: 0.25rem;
+  }
+  .nav-links {
+    width: 40px;
+    height: 40px;
+  }
 }

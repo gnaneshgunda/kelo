@@ -1,49 +1,84 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { FaShoppingCart, FaHome, FaInfoCircle } from 'react-icons/fa';
-import keloLogoOld from '../assets/kelo_logo.jpeg';
-import logoNav from '../assets/logo-nav.jpeg';
+import keloLogo from '../assets/kelo_logo.jpeg';
 import './nav.css';
 
 export default function Nav() {
   const { cartCount } = useCart();
+  const location = useLocation();
+
+  const isActive = (path: string) => location.pathname === path;
 
   return (
-    <nav className="navbar">
-      <div className="navbar-container">
-        <Link to="/" className="navbar-logo">
-          {/* Desktop logo */}
-          <div className="logo-desktop-container">
-            <img src={keloLogoOld} alt="KELO Logo" className="logo-img-old" />
-            <h1 className="logo-title">KELO</h1>
-          </div>
-          {/* Mobile logo */}
-          <h1 className="logo-title-mobile">KELO</h1>
-        </Link>
-        <ul className="nav-menu">
-          <li className="nav-item">
-            <Link to="/" className="nav-links">
-              <FaHome className="nav-icon" />
-              <span className="nav-text">Home</span>
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link to="/about" className="nav-links">
-              <FaInfoCircle className="nav-icon" />
-              <span className="nav-text">About Us</span>
-            </Link>
-          </li>
-          <li className="nav-item cart-item">
-            <Link to="/cart" className="nav-links cart-link">
-              <div className="cart-icon-container">
-                <FaShoppingCart className="nav-icon cart-icon" />
-                {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
-              </div>
-              <span className="nav-text">Cart</span>
-            </Link>
-          </li>
-        </ul>
+    <header className="navbar-header">
+      {/* Top luxury announcement bar */}
+      <div className="top-banner">
+        <div className="top-banner-content">
+          <span className="banner-text">✨ Handcrafted Gifts & Artisanal Crafts</span>
+          <span className="banner-divider">•</span>
+          <span className="banner-text">Free Shipping on Orders Over $50</span>
+        </div>
       </div>
-    </nav>
+
+      {/* Main navigation bar */}
+      <nav className="navbar" aria-label="Main Navigation">
+        <div className="navbar-container">
+          {/* Logo Section */}
+          <Link to="/" className="navbar-logo" aria-label="KELO Homepage">
+            <div className="logo-badge">
+              <img src={keloLogo} alt="KELO Logo" className="logo-img" />
+            </div>
+            <div className="logo-text-wrapper">
+              <span className="logo-title">KELO</span>
+              <span className="logo-subtitle">Key to your Unexpressed love</span>
+            </div>
+          </Link>
+
+          {/* Nav Links & Actions */}
+          <ul className="nav-menu">
+            <li className="nav-item">
+              <Link
+                to="/"
+                className={`nav-links ${isActive('/') ? 'active' : ''}`}
+                aria-current={isActive('/') ? 'page' : undefined}
+                aria-label="Home"
+              >
+                <FaHome className="nav-icon" aria-hidden="true" />
+                <span className="nav-text">Home</span>
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link
+                to="/about"
+                className={`nav-links ${isActive('/about') ? 'active' : ''}`}
+                aria-current={isActive('/about') ? 'page' : undefined}
+                aria-label="About Us"
+              >
+                <FaInfoCircle className="nav-icon" aria-hidden="true" />
+                <span className="nav-text">About Us</span>
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link
+                to="/cart"
+                className={`nav-links cart-link ${isActive('/cart') ? 'active' : ''}`}
+                aria-current={isActive('/cart') ? 'page' : undefined}
+                aria-label={`Shopping Cart with ${cartCount} items`}
+              >
+                <FaShoppingCart className="nav-icon cart-icon" aria-hidden="true" />
+                {cartCount > 0 && (
+                  <span className="cart-badge" key={cartCount}>
+                    {cartCount > 99 ? '99+' : cartCount}
+                  </span>
+                )}
+                <span className="nav-text cart-text">Cart</span>
+              </Link>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </header>
   );
 }
+
