@@ -86,9 +86,11 @@ export default function ProductDetailModal({ product, onClose }: ProductDetailMo
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-panel" onClick={(e) => e.stopPropagation()}>
+      <div className="modal-close-row">
         <button className="modal-close-btn" onClick={onClose} aria-label="Close">
           <FaTimes />
         </button>
+      </div>
 
         <div className="modal-body">
           {/* ─── LEFT: Image Gallery ─── */}
