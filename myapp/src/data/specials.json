@@ -17,7 +17,7 @@
     "originalPrice": 499.00,
     "offerText": "20% OFF",
     "productId": "p1",
-    "imageUrl": "/src/data/Heart-frame.jpeg"
+    "imageUrl": "https://res.cloudinary.com/zo7u3tba/image/upload/v1787248483/Heart-frame.jpg"
   },
 
   {
