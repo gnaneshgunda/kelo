@@ -1,160 +1,342 @@
-.hall-specials-banner {
-  background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
-  color: var(--white);
-  padding: 3rem 2rem;
-  border-radius: 12px;
-  margin-bottom: 2rem;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+/* ══════════════════════════════════════════
+   RAKSHA BANDHAN BANNER — Image-forward, elegant
+   The overlay is directional: cream-heavy on the
+   left (text side) → transparent on the right
+   (image side) so the Heart Frame stays visible.
+   ══════════════════════════════════════════ */
+
+.rakhi-banner {
   position: relative;
+  border-radius: 16px;
   overflow: hidden;
-  transition: background-image 0.5s ease-in-out;
+  margin-bottom: 2rem;
+  min-height: 380px;
+  background-color: #2A1A0E;          /* fallback while image loads */
+  background-size: cover;
+  background-position: center right;  /* keep the heart frame in view */
+  border: 1px solid #EDD9CE;
+  box-shadow: 0 6px 32px rgba(60, 34, 18, 0.14), 0 1px 4px rgba(60, 34, 18, 0.08);
 }
 
-.specials-content {
+/* ── Directional overlay ──
+   Left 55% → warm cream (text readable)
+   Right 45% → near-transparent (image shines) */
+.rakhi-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to right,
+    rgba(253, 240, 228, 0.94) 0%,
+    rgba(253, 240, 228, 0.88) 30%,
+    rgba(253, 240, 228, 0.60) 50%,
+    rgba(253, 240, 228, 0.18) 70%,
+    rgba(253, 240, 228, 0.00) 100%
+  );
+  z-index: 1;
+}
+
+/* ── Rakhi SVG decorations ── */
+.rakhi-deco {
+  position: absolute;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.rakhi-deco--tl {
+  top: -4px;
+  left: -4px;
+  width: 200px;
+  height: 200px;
+}
+
+.rakhi-deco--br {
+  bottom: -4px;
+  right: -4px;
+  width: 200px;
+  height: 200px;
+}
+
+/* ── Content row ── */
+.rakhi-content {
+  position: relative;
+  z-index: 3;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 2.5rem 1.75rem 2rem;
+  min-height: 320px;
 }
 
-.special-card {
-  flex: 1;
-  text-align: center;
-  padding: 0 2rem;
-}
-
-.special-header {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 15px;
-  margin-bottom: 1rem;
-}
-
-.special-header h3 {
-  margin: 0;
-  font-size: 1.2rem;
-  letter-spacing: 2px;
-  color: var(--background-color);
-  text-transform: uppercase;
-}
-
-.offer-badge {
-  background-color: #e74c3c;
-  color: white;
-  padding: 4px 12px;
-  border-radius: 4px;
-  font-weight: bold;
-  font-size: 0.9rem;
-}
-
-.special-product-name {
-  font-size: 2.5rem;
-  margin: 0.5rem 0;
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
-}
-
-.special-price {
-  margin: 1rem 0;
-  display: flex;
-  align-items: baseline;
-  justify-content: center;
-  gap: 15px;
-}
-
-.old-price {
-  text-decoration: line-through;
-  color: #bdc3c7;
-  font-size: 1.2rem;
-}
-
-.new-price {
-  font-size: 2rem;
-  font-weight: bold;
-  color: #f1c40f;
-}
-
-.shop-now-btn {
-  background-color: transparent;
-  border: 2px solid var(--white);
-  color: var(--white);
-  padding: 10px 30px;
-  font-size: 1.1rem;
-  font-weight: bold;
-  border-radius: 25px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  margin-top: 1rem;
-}
-
-.shop-now-btn:hover {
-  background-color: var(--white);
-  color: var(--primary-color);
-}
-
-.carousel-control {
-  background: rgba(255, 255, 255, 0.2);
-  border: none;
-  color: white;
-  font-size: 1.5rem;
+/* ── Arrow buttons ── */
+.rakhi-arrow {
+  flex-shrink: 0;
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  cursor: pointer;
+  border: 1px solid rgba(184, 137, 58, 0.35);
+  background: rgba(253, 240, 228, 0.75);
+  color: #6B4C38;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.3s;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 2px 8px rgba(60, 34, 18, 0.10);
 }
 
-.carousel-control:hover {
-  background: rgba(255, 255, 255, 0.4);
+.rakhi-arrow svg { width: 16px; height: 16px; }
+
+.rakhi-arrow:hover {
+  background: rgba(255, 250, 247, 0.96);
+  border-color: #C1440E;
+  color: #C1440E;
+  box-shadow: 0 4px 14px rgba(193, 68, 14, 0.16);
+  transform: scale(1.06);
 }
 
-.carousel-indicators {
+/* ── Card ── */
+.rakhi-card {
+  flex: 1;
+  display: flex;
+  justify-content: flex-start;   /* text anchored left */
+  padding: 0 1.5rem 0 2rem;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.rakhi-card--fade {
+  opacity: 0;
+  transform: translateY(5px);
+}
+
+/* ── Frosted text panel ──
+   Sits over the cream overlay area; gives text
+   a clean readable surface without hiding the image */
+.rakhi-text-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  background: rgba(253, 246, 236, 0.60);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(237, 217, 206, 0.55);
+  border-radius: 14px;
+  padding: 1.75rem 2rem;
+  max-width: 380px;
+  box-shadow: 0 4px 20px rgba(60, 34, 18, 0.06);
+}
+
+/* 1. Festival label */
+.rakhi-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #B8893A;
+  margin-bottom: 0.6rem;
+}
+
+.rakhi-label__dot {
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #B8893A;
+  opacity: 0.7;
+}
+
+/* 2. Tagline */
+.rakhi-tagline {
+  font-family: 'Libre Bodoni', 'Playfair Display', Georgia, serif;
+  font-size: clamp(0.85rem, 1.6vw, 1rem);
+  font-style: italic;
+  color: #7A5840;
+  margin-bottom: 0.5rem;
+  line-height: 1.5;
+}
+
+/* 3. Product name */
+.rakhi-product-name {
+  font-family: 'Libre Bodoni', 'Playfair Display', Georgia, serif;
+  font-size: clamp(1.6rem, 3.5vw, 2.3rem);
+  font-weight: 700;
+  color: #2D1B0E;
+  margin: 0 0 1rem;
+  line-height: 1.2;
+  letter-spacing: 0.2px;
+}
+
+/* 4+5. Price row */
+.rakhi-price-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 1.3rem;
+  flex-wrap: wrap;
+}
+
+.rakhi-badge {
+  background: rgba(193, 68, 14, 0.10);
+  color: #C1440E;
+  border: 1px solid rgba(193, 68, 14, 0.25);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  padding: 3px 10px;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+
+.rakhi-old-price {
+  font-size: 0.95rem;
+  color: #A08070;
+  text-decoration: line-through;
+  font-family: var(--font-body);
+}
+
+.rakhi-new-price {
+  font-size: 1.65rem;
+  font-weight: 700;
+  color: #2D1B0E;
+  font-family: var(--font-body);
+}
+
+/* 6. CTA */
+.rakhi-cta {
+  display: inline-block;
+  padding: 0.58rem 1.9rem;
+  border-radius: 8px;
+  border: 1.5px solid #C1440E;
+  background: transparent;
+  color: #C1440E;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.22s ease;
+}
+
+.rakhi-cta:hover {
+  background: #C1440E;
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(193, 68, 14, 0.24);
+  transform: translateY(-1px);
+}
+
+/* ── Dots ── */
+.rakhi-dots {
+  position: relative;
+  z-index: 3;
   display: flex;
   justify-content: center;
-  gap: 8px;
-  margin-top: 1.5rem;
+  gap: 7px;
+  padding-bottom: 1.2rem;
 }
 
-.indicator {
-  width: 10px;
-  height: 10px;
-  background-color: rgba(255, 255, 255, 0.5);
+.rakhi-dot {
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
+  border: 1px solid #C8A882;
+  background: transparent;
   cursor: pointer;
-  transition: background 0.3s;
+  padding: 0;
+  transition: all 0.3s ease;
 }
 
-.indicator.active {
-  background-color: var(--white);
-  transform: scale(1.2);
+.rakhi-dot--active {
+  background: #B8893A;
+  border-color: #B8893A;
+  width: 20px;
+  border-radius: 4px;
+}
+
+/* ══════════════════════════════════════════
+   RESPONSIVE
+   ══════════════════════════════════════════ */
+
+@media (max-width: 1024px) {
+  .rakhi-banner    { min-height: 340px; }
+  .rakhi-deco--tl,
+  .rakhi-deco--br  { width: 160px; height: 160px; }
+  .rakhi-text-panel{ max-width: 340px; padding: 1.5rem 1.6rem; }
+  .rakhi-card      { padding: 0 1rem 0 1.25rem; }
+}
+
+@media (max-width: 768px) {
+  .rakhi-banner {
+    min-height: 300px;
+    border-radius: 12px;
+    background-position: center;
+  }
+  .rakhi-content   { padding: 2rem 0.85rem 1.5rem; min-height: 260px; }
+  .rakhi-deco--tl,
+  .rakhi-deco--br  { width: 130px; height: 130px; }
+  .rakhi-card      { padding: 0 0.75rem 0 0.5rem; justify-content: center; }
+  .rakhi-text-panel{ max-width: 300px; padding: 1.25rem 1.4rem; }
+  .rakhi-arrow     { width: 34px; height: 34px; }
+  .rakhi-arrow svg { width: 14px; height: 14px; }
 }
 
 @media (max-width: 600px) {
-  .hall-specials-banner {
-    padding: 1.5rem 1rem;
-    border-radius: 8px;
+  .rakhi-banner {
+    min-height: 0;
+    border-radius: 10px;
+    background-position: 65% center; /* shift image right so text panel has room */
   }
 
-  .special-product-name {
-    font-size: 1.8rem;
+  /* On mobile the overlay becomes more uniform so text is always readable */
+  .rakhi-overlay {
+    background: linear-gradient(
+      to right,
+      rgba(253, 240, 228, 0.92) 0%,
+      rgba(253, 240, 228, 0.80) 45%,
+      rgba(253, 240, 228, 0.40) 75%,
+      rgba(253, 240, 228, 0.10) 100%
+    );
   }
 
-  .special-header h3 {
-    font-size: 1rem;
+  /* Hide the bottom-right deco on mobile — keeps it uncluttered */
+  .rakhi-deco--br  { display: none; }
+  .rakhi-deco--tl  { width: 100px; height: 100px; }
+
+  .rakhi-content   { padding: 1.5rem 0.5rem 1.25rem; min-height: 0; align-items: center; }
+  .rakhi-arrow     { width: 30px; height: 30px; }
+  .rakhi-arrow svg { width: 12px; height: 12px; }
+
+  .rakhi-card      { padding: 0 0.35rem; justify-content: center; }
+  .rakhi-text-panel{
+    max-width: 100%;
+    padding: 1.1rem 1.2rem;
+    background: rgba(253, 246, 236, 0.72);
+    align-items: center;
+    text-align: center;
   }
 
-  .new-price {
-    font-size: 1.5rem;
-  }
+  .rakhi-label     { font-size: 0.58rem; letter-spacing: 2px; gap: 6px; margin-bottom: 0.4rem; }
+  .rakhi-tagline   { font-size: 0.8rem; margin-bottom: 0.35rem; }
+  .rakhi-product-name { font-size: clamp(1.3rem, 6vw, 1.75rem); margin-bottom: 0.7rem; }
 
-  .special-card {
-    padding: 0 0.5rem;
-  }
+  .rakhi-price-row { gap: 7px; margin-bottom: 0.9rem; justify-content: center; }
+  .rakhi-old-price { font-size: 0.82rem; }
+  .rakhi-new-price { font-size: 1.35rem; }
+  .rakhi-badge     { font-size: 0.62rem; padding: 2px 8px; }
 
-  .shop-now-btn {
-    padding: 8px 20px;
-    font-size: 1rem;
-  }
+  .rakhi-cta       { padding: 0.52rem 1.5rem; font-size: 0.8rem; letter-spacing: 1px; }
+  .rakhi-dots      { padding-bottom: 0.9rem; }
+}
+
+@media (max-width: 380px) {
+  .rakhi-content       { padding: 1.3rem 0.3rem 1rem; }
+  .rakhi-arrow         { width: 26px; height: 26px; }
+  .rakhi-text-panel    { padding: 0.9rem 1rem; }
+  .rakhi-product-name  { font-size: 1.2rem; }
+  .rakhi-new-price     { font-size: 1.15rem; }
 }
