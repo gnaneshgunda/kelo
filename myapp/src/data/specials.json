@@ -1,16 +1,6 @@
 [
-  {
+    {
     "id": "s1",
-    "name": "Memory Heart Frame",
-    "tagline": "Celebrate the Bond That Lasts Forever",
-    "price": 399.00,
-    "originalPrice": 499.00,
-    "offerText": "20% OFF",
-    "productId": "p1",
-    "imageUrl": "/src/data/Heart-frame.jpeg"
-  },
-  {
-    "id": "s2",
     "name": "Rakhi Gift Hamper",
     "tagline": "Everything She Deserves, Wrapped with Love",
     "price": 449.00,
@@ -19,6 +9,17 @@
     "productId": "p3",
     "imageUrl": "https://res.cloudinary.com/zo7u3tba/image/upload/v1787367075/WhatsApp_Image_2026-08-22_at_08.19.39_1.jpg"
   },
+  {
+    "id": "s2",
+    "name": "Memory Heart Frame",
+    "tagline": "Celebrate the Bond That Lasts Forever",
+    "price": 399.00,
+    "originalPrice": 499.00,
+    "offerText": "20% OFF",
+    "productId": "p1",
+    "imageUrl": "/src/data/Heart-frame.jpeg"
+  },
+
   {
     "id": "s3",
     "name": "Handcrafted Scrap Book",
