@@ -1,11 +1,11 @@
 import { useState, useEffect, useCallback } from 'react';
 import type { Product } from '../types';
 import { useCart } from '../context/CartContext';
+import { useProducts } from '../context/ProductContext';
 import {
   FaStar, FaStarHalfAlt, FaRegStar, FaCartPlus, FaPlus, FaMinus,
   FaTimes, FaChevronLeft, FaChevronRight, FaTruck, FaShieldAlt, FaUndo
 } from 'react-icons/fa';
-import { DUMMY_PRODUCTS } from '../data/products';
 import { useAISuggestions } from '../hooks/useAISuggestions';
 import AISuggestionRow from './AISuggestionRow';
 import './ProductDetailModal.css';
@@ -27,6 +27,7 @@ function StarRating({ rating }: { rating: number }) {
 
 export default function ProductDetailModal({ product, onClose }: ProductDetailModalProps) {
   const { cartItems, addToCart, updateQuantity } = useCart();
+  const { products } = useProducts();
   const [activeImg, setActiveImg] = useState(0);
   const [zoom, setZoom] = useState(false);
   const [zoomPos, setZoomPos] = useState({ x: 50, y: 50 });
@@ -35,7 +36,7 @@ export default function ProductDetailModal({ product, onClose }: ProductDetailMo
 
   const { suggestions, loading: suggestionsLoading, isAIEnabled } = useAISuggestions(
     currentProduct,
-    DUMMY_PRODUCTS,
+    products,
     cartItems
   );
 

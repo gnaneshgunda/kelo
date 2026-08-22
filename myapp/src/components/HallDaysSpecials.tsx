@@ -1,16 +1,6 @@
 import { useState, useEffect } from 'react';
+import type { SpecialOffer } from '../types';
 import './HallDaysSpecials.css';
-
-interface SpecialOffer {
-  id: string;
-  name: string;
-  tagline: string;
-  price: number;
-  originalPrice: number;
-  offerText: string;
-  imageUrl: string;
-  productId?: string;
-}
 
 export default function HallDaysSpecials({ specials, onShopNow }: {
   specials: SpecialOffer[];
@@ -184,14 +174,16 @@ export default function HallDaysSpecials({ specials, onShopNow }: {
               RAKSHA BANDHAN SPECIALS
               <span className="rakhi-label__dot" />
             </div>
-            <p className="rakhi-tagline">{current.tagline}</p>
+            <p className="rakhi-tagline">{current.tagline || current.description?.slice(0, 70) || 'Artisan handcrafted special'}</p>
             <h2 className="rakhi-product-name">{current.name}</h2>
             <div className="rakhi-price-row">
-              <span className="rakhi-badge">{current.offerText}</span>
-              <span className="rakhi-old-price">₹{current.originalPrice.toFixed(2)}</span>
+              {current.offerText && <span className="rakhi-badge">{current.offerText}</span>}
+              {current.originalPrice && (
+                <span className="rakhi-old-price">₹{current.originalPrice.toFixed(2)}</span>
+              )}
               <span className="rakhi-new-price">₹{current.price.toFixed(2)}</span>
             </div>
-            <button className="rakhi-cta" onClick={() => current.productId && onShopNow?.(current.productId)}>
+            <button className="rakhi-cta" onClick={() => (current.productId || current.id) && onShopNow?.(current.productId || current.id)}>
               Shop Now
             </button>
           </div>
