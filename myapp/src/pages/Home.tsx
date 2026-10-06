@@ -32,10 +32,12 @@ export default function Home() {
     }
   };
 
+  const activeProducts = products.filter((p) => p.isActive !== false);
+
   const filteredProducts =
     selectedCategory === 'All'
-      ? products
-      : products.filter((p) => p.category === selectedCategory);
+      ? activeProducts
+      : activeProducts.filter((p) => p.category === selectedCategory);
 
   return (
     <div className="home-container">

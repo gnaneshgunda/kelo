@@ -9,6 +9,14 @@ export default function HallDaysSpecials({ specials, onShopNow }: {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [animating, setAnimating] = useState(false);
 
+  const goTo = (indexFn: (prev: number) => number) => {
+    setAnimating(true);
+    setTimeout(() => {
+      setCurrentIndex(indexFn);
+      setAnimating(false);
+    }, 250);
+  };
+
   useEffect(() => {
     if (!specials || specials.length === 0) return;
     const interval = setInterval(() => goTo((prev) => (prev + 1) % specials.length), 5000);
@@ -16,14 +24,6 @@ export default function HallDaysSpecials({ specials, onShopNow }: {
   }, [specials]);
 
   if (!specials || specials.length === 0) return null;
-
-  function goTo(indexFn: (prev: number) => number) {
-    setAnimating(true);
-    setTimeout(() => {
-      setCurrentIndex(indexFn);
-      setAnimating(false);
-    }, 250);
-  }
 
   const handleNext = () => goTo((prev) => (prev + 1) % specials.length);
   const handlePrev = () => goTo((prev) => (prev === 0 ? specials.length - 1 : prev - 1));

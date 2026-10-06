@@ -61,6 +61,17 @@ export default function Nav() {
             </li>
             <li className="nav-item">
               <Link
+                to="/events"
+                className={`nav-links ${isActive('/events') ? 'active' : ''}`}
+                aria-current={isActive('/events') ? 'page' : undefined}
+                aria-label="Events"
+              >
+                <span className="nav-icon" style={{ display: 'inline-flex' }}>🎉</span>
+                <span className="nav-text">Events</span>
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link
                 to="/cart"
                 className={`nav-links cart-link ${isActive('/cart') ? 'active' : ''}`}
                 aria-current={isActive('/cart') ? 'page' : undefined}

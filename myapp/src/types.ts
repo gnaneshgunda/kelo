@@ -5,13 +5,14 @@ export interface Product {
   price: number;
   category: string;
   imageUrl: string;
-  images?: string[];         // multiple gallery images
-  rating?: number;           // e.g. 4.5
-  reviews?: number;          // e.g. 128
-  highlights?: string[];     // bullet points
+  images?: string[];
+  rating?: number;
+  reviews?: number;
+  highlights?: string[];
   material?: string;
   dimensions?: string;
   deliveryInfo?: string;
+  isActive?: boolean;
 }
 
 export interface SpecialOffer {
@@ -26,6 +27,7 @@ export interface SpecialOffer {
   images?: string[];
   productId?: string;
   category?: string;
+  isActive?: boolean;
 }
 
 export interface CartItem {
@@ -69,6 +71,25 @@ export interface CheckoutResponse {
   error?: string;
 }
 
+export interface AdminOrderItem {
+  id: string;
+  name?: string;
+  price?: number;
+  quantity: number;
+}
+
+export interface AdminOrder {
+  id: number;
+  customerName: string;
+  email?: string;
+  phone: string;
+  shippingAddress?: string;
+  items: AdminOrderItem[];
+  totalAmount: number;
+  status: 'PENDING' | 'CONFIRMED' | 'SHIPPED' | 'DELIVERED' | 'CANCELLED';
+  createdAt: string;
+}
+
 export interface StoreStats {
   totalProducts: number;
   totalSpecials: number;
@@ -77,4 +98,63 @@ export interface StoreStats {
     min: number;
     max: number;
   };
+}
+
+// ─── Events & Contests ──────────────────────────────────────
+
+export interface KeloEvent {
+  id: string;
+  title: string;
+  description: string;
+  dateTime: string;
+  location: string;
+  bannerUrl?: string;
+  eventType: 'general' | 'hall_day' | 'poll' | 'painting_competition';
+  isPublished: boolean;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+export interface PollOption {
+  id: string;
+  pollId: string;
+  optionText: string;
+  votes: number;
+}
+
+export interface Poll {
+  id: string;
+  eventId?: string;
+  title: string;
+  description?: string;
+  isOpen: boolean;
+  options: PollOption[];
+  totalVotes?: number;
+  createdAt?: string;
+}
+
+// Painting competition application (Participant Details ONLY - NO artwork_url)
+export interface PaintingApplication {
+  id: string;
+  eventId: string;
+  fullName: string;
+  email: string;
+  phone: string;
+  rollNumber: string;
+  department: string;
+  hall: string;
+  paintingCategory: string;
+  description: string;
+  status: 'PENDING' | 'ACCEPTED' | 'REJECTED';
+  createdAt?: string;
+}
+
+export interface SiteSettings {
+  announcementText?: string;
+  announcementSubtext?: string;
+  isAnnouncementActive?: boolean;
+  contactEmail?: string;
+  contactPhone?: string;
+  instagramHandle?: string;
+  specialsTitle?: string;
 }

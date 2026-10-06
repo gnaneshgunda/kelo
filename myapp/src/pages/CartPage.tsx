@@ -48,9 +48,9 @@ export default function CartPage() {
       } else {
         setCheckoutError(response.error || 'Failed to complete order. Please try again.');
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('[Checkout Error]', err);
-      setCheckoutError(err.message || 'Network error occurred during checkout. Please check your connection.');
+      setCheckoutError(err instanceof Error ? err.message : 'Network error occurred during checkout. Please check your connection.');
     } finally {
       setIsSubmitting(false);
     }

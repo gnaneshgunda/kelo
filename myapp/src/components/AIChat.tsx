@@ -144,7 +144,7 @@ export default function AIChat() {
                 <p className="chat-header-name">KELO Assistant</p>
                 <p className="chat-header-sub">
                   <span className="chat-online-dot" />
-                  Powered by Cloudflare Workers AI
+                  Powered by KELO Artisan AI
                 </p>
               </div>
             </div>

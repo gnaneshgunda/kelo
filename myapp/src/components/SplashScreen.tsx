@@ -3,14 +3,11 @@ import keloLogo from '../assets/kelo_logo.jpeg';
 import './SplashScreen.css';
 
 export default function SplashScreen() {
-  const [isVisible, setIsVisible] = useState(true);
+  const [isVisible, setIsVisible] = useState(() => !sessionStorage.getItem('splashShown'));
   const [isShrinking, setIsShrinking] = useState(false);
 
   useEffect(() => {
-    if (sessionStorage.getItem('splashShown')) {
-      setIsVisible(false);
-      return;
-    }
+    if (!isVisible) return;
 
     const timer1 = setTimeout(() => {
       setIsShrinking(true);

@@ -30,9 +30,9 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({ child
       ]);
       setProducts(fetchedProducts);
       setSpecials(fetchedSpecials);
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('[ProductContext] Error loading catalog:', err);
-      setError(err.message || 'Failed to load catalog');
+      setError(err instanceof Error ? err.message : 'Failed to load catalog');
     } finally {
       setLoading(false);
     }
