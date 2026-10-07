@@ -19,7 +19,10 @@ class PostgresPoolDb implements IDatabase {
   private pool: Pool;
 
   constructor(connectionString: string) {
-    this.pool = new Pool({ connectionString });
+    this.pool = new Pool({
+      connectionString,
+      ssl: { rejectUnauthorized: false },
+    });
   }
 
   async query<T = any>(sql: string, params: any[] = []): Promise<DbResult<T>> {
