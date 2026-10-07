@@ -2,11 +2,14 @@ import nodemailer from 'nodemailer';
 import { config } from '../config';
 
 const transporter = nodemailer.createTransport({
-  service: 'gmail',
+  host: 'smtp.gmail.com',
+  port: 587,
+  secure: false,
   auth: {
     user: config.gmailUser,
     pass: config.gmailAppPassword,
   },
+  family: 4, // force IPv4
 });
 
 export async function sendOrderStatusEmail(order: {
