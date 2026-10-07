@@ -9,7 +9,8 @@ const transporter = nodemailer.createTransport({
     user: config.gmailUser,
     pass: config.gmailAppPassword,
   },
-  family: 4, // force IPv4
+  tls: { rejectUnauthorized: false },
+  socketTimeout: 10000,
 });
 
 export async function sendOrderStatusEmail(order: {
