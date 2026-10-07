@@ -25,7 +25,7 @@ export async function runSeeds() {
   const productsCountRes = await query('SELECT COUNT(*) as count FROM products');
   const count = parseInt(productsCountRes.rows[0]?.count || '0', 10);
   if (count === 0) {
-    const productsJsonPath = path.resolve(__dirname, '../../../myapp/src/data/products.json');
+    const productsJsonPath = path.resolve(__dirname, '../data/products.json');
     if (fs.existsSync(productsJsonPath)) {
       const raw = fs.readFileSync(productsJsonPath, 'utf-8');
       const products = JSON.parse(raw);
@@ -64,7 +64,7 @@ export async function runSeeds() {
   const specialsCountRes = await query('SELECT COUNT(*) as count FROM specials');
   const sCount = parseInt(specialsCountRes.rows[0]?.count || '0', 10);
   if (sCount === 0) {
-    const specialsJsonPath = path.resolve(__dirname, '../../../myapp/src/data/specials.json');
+    const specialsJsonPath = path.resolve(__dirname, '../data/specials.json');
     if (fs.existsSync(specialsJsonPath)) {
       const raw = fs.readFileSync(specialsJsonPath, 'utf-8');
       const specials = JSON.parse(raw);

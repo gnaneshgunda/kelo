@@ -1,0 +1,156 @@
+[
+  {
+    "id": "p1",
+    "name": "Memory Heart Frame",
+    "description": "A beautifully crafted geometric heart photo display, designed to illuminate your most cherished memories. Adorned with delicate, warm fairy lights, charming heart-shaped clips, and a modern wireframe to hang your favorite polaroids. Each glowing display becomes a one-of-a-kind personal gallery — uniquely yours, bringing your love story to life.",
+    "price": 399.00,
+    "category": "Decor",
+    "imageUrl": "https://res.cloudinary.com/zo7u3tba/image/upload/v1787248483/Heart-frame.jpg",
+    "images": [
+      "https://res.cloudinary.com/zo7u3tba/image/upload/v1787248483/Heart-frame.jpg",
+      "https://res.cloudinary.com/zo7u3tba/image/upload/v1787248579/WhatsApp_Image_2026-08-20_at_23.21.20.jpg",
+      "https://res.cloudinary.com/zo7u3tba/image/upload/v1787248682/WhatsApp_Image_2026-08-20_at_23.22.57.jpg",
+      "https://res.cloudinary.com/zo7u3tba/image/upload/v1787248683/WhatsApp_Image_2026-08-20_at_23.21.48.jpg",
+      "https://res.cloudinary.com/zo7u3tba/image/upload/v1787249696/heart-4.jpg"
+    ],
+    "rating": 4.8,
+    "reviews": 7,
+    "highlights": [
+      "Crafted with a lightweight, remarkably rigid geometric frame",
+      "Fully customizable to showcase both Polaroids and standard photos",
+      "Features warm fairy lights with up to 72 hours of battery life",
+      "Versatile display options: mount to a wall, hang securely, or rest on a tabletop"
+    ],
+    "material": "Bamboo sticks, Fairy lights, paper clips",
+    "dimensions": "60 cm × 60 cm (folded)",
+    "deliveryInfo": "Ready to ship in 3–4 business days"
+  },
+  {
+    "id": "p2",
+    "name": "Photo Frames",
+    "description": "Artisan-crafted rustic wooden photo frames that bring warmth and personality to any space. Hand-polished with natural beeswax for a smooth finish. Available in portrait and landscape orientation, perfect for cherishing your most precious memories.",
+    "price": 149.00,
+    "category": "Frames",
+    "imageUrl": "https://res.cloudinary.com/zo7u3tba/image/upload/v1787249923/WhatsApp_Image_2026-08-20_at_23.47.41.jpg",
+    "images": [
+      "https://res.cloudinary.com/zo7u3tba/image/upload/v1787249923/WhatsApp_Image_2026-08-20_at_23.47.41.jpg",
+      "https://res.cloudinary.com/zo7u3tba/image/upload/v1787250001/WhatsApp_Image_2026-08-20_at_23.49.32.jpg",
+      "https://res.cloudinary.com/zo7u3tba/image/upload/v1787250002/WhatsApp_Image_2026-08-20_at_23.48.51.jpg"
+    ],
+    "rating": 4.6,
+    "reviews": 5,
+    "highlights": [
+      "Compact 2.5×2.5 inch frame featuring a warm wooden-textured finish",
+      "Completely customized design—includes 1 custom photo insert with options for extra prints",
+      "Fitted with a crystal-clear acrylic front to protect your memories from dust and wear"
+    ],
+    "material": "Wood, Acrylic front",
+    "dimensions": "2.5 inch × 2.5 inch",
+    "deliveryInfo": "Ships within 1-2 business days"
+  },
+  {
+    "id": "p3",
+    "name": "Rakhi Gift Hamper",
+    "description": "Celebrate the special bond of Rakshabandhan with this beautifully curated gift hamper, designed to unlock your unexpressed love. Packed with a perfect blend of childhood nostalgia and elegant accessories, this aesthetic box features a custom-designed Shinchan frame, charming polaroids, and chic hair accessories, all sweetened with a classic chocolate treat. Thoughtfully packaged to bring a smile to your sibling's face, it’s a memorable and heartwarming present to celebrate the ones who annoy you the most but still get a hug.",
+    "price": 449.00,
+    "category": "Hampers",
+    "imageUrl": "https://res.cloudinary.com/zo7u3tba/image/upload/v1787367075/WhatsApp_Image_2026-08-22_at_08.19.39_1.jpg",
+    "images": [
+      "https://res.cloudinary.com/zo7u3tba/image/upload/v1787367075/WhatsApp_Image_2026-08-22_at_08.19.39_1.jpg",
+      "https://res.cloudinary.com/zo7u3tba/image/upload/v1787367075/WhatsApp_Image_2026-08-22_at_08.19.39.jpg",
+      "https://res.cloudinary.com/zo7u3tba/image/upload/v1787367076/WhatsApp_Image_2026-08-22_at_08.19.38_2.jpg",
+      "https://res.cloudinary.com/zo7u3tba/image/upload/v1787367076/WhatsApp_Image_2026-08-22_at_08.19.38_1.jpg",
+      "https://res.cloudinary.com/zo7u3tba/image/upload/v1787367077/WhatsApp_Image_2026-08-22_at_08.19.38.jpg",
+      "https://res.cloudinary.com/zo7u3tba/image/upload/v1787367076/WhatsApp_Image_2026-08-22_at_08.19.37.jpg"
+    ],
+    "rating": 4.7,
+    "reviews": 213,
+    "highlights": [
+      "Custom 4x4 inch photo frame featuring a nostalgic Shinchan design and a heartfelt Rakshabandhan quote",
+    "Set of 5 high-quality aesthetic Shinchan polaroids (8x9.3 cm)",
+    "Elegant gold satin scrunchie and a minimalistic floral hair clutch",
+    "Ferrero Rocher chocolate beautifully presented in a vibrant sunflower display",
+    "Premium Rakhi 'Thank You' card featuring a warm message about sibling bonds",
+    "Presented in a signature 'KELO' gift box, ready for gifting",
+    "Love a specific item? All products featured in this box are also available to buy separately!"
+    ],
+    "material": "Glass Beads, Natural Stone, Brass Clasp",
+    "dimensions": "Adjustable, fits wrists 15–20 cm",
+    "deliveryInfo": "Ready to ship in 1 business day"
+  },
+  {
+    "id": "p4",
+    "name": "Scrap Book",
+    "description": "A beautifully bound handmade scrapbook with thick recycled pages, perfect for preserving memories, journaling, or as a one-of-a-kind gift. The covers are adorned with hand-stamped designs and secured with a natural jute ribbon.",
+    "price": 60.00,
+    "category": "Books",
+    "imageUrl": "/src/assets/products/scrap-book.jpg",
+    "images": [
+      "/src/assets/products/scrap-book.jpg",
+      "/src/assets/products/scrap-book-2.jpg",
+      "/src/assets/products/scrap-book-3.jpg"
+    ],
+    "rating": 4.9,
+    "reviews": 87,
+    "highlights": [
+      "60 pages of thick 180gsm recycled paper",
+      "Hand-stamped decorative cover",
+      "Lay-flat binding for easy writing",
+      "Secured with a natural jute ribbon closure",
+      "Ideal for memories, journaling, or gifting"
+    ],
+    "material": "Recycled Paper, Jute Ribbon, Natural Dyes",
+    "dimensions": "22 cm × 28 cm, 60 pages",
+    "deliveryInfo": "Ships within 2–3 business days"
+  },
+  {
+    "id": "p5",
+    "name": "Mini Cards",
+    "description": "A delightful set of mini greeting cards perfect for gift tags, thank-you notes, or little love notes. Each card is hand-illustrated with seasonal motifs. Comes in a pack of 10 with matching mini envelopes in assorted designs.",
+    "price": 30.00,
+    "category": "Cards",
+    "imageUrl": "/src/assets/products/mini-cards.jpg",
+    "images": [
+      "/src/assets/products/mini-cards.jpg",
+      "/src/assets/products/mini-cards-2.jpg",
+      "/src/assets/products/mini-cards-3.jpg"
+    ],
+    "rating": 4.5,
+    "reviews": 176,
+    "highlights": [
+      "Pack of 10 assorted hand-illustrated mini cards",
+      "Each card measures 7 cm × 5 cm",
+      "Includes 10 matching mini envelopes",
+      "Printed on 250gsm matte finish card stock",
+      "Non-toxic, eco-friendly inks"
+    ],
+    "material": "Premium Card Stock, Eco Inks",
+    "dimensions": "7 cm × 5 cm per card",
+    "deliveryInfo": "Ready to ship in 1 business day"
+  },
+  {
+    "id": "p6",
+    "name": "Shinchan Card",
+    "description": "A quirky, hand-illustrated Shinchan-themed greeting card that will bring a big smile to any fan! The inside features a personalizable message area with cute Shinchan doodles throughout. A guaranteed crowd-pleaser for kids and adults alike.",
+    "price": 18.00,
+    "category": "Cards",
+    "imageUrl": "/src/assets/products/shinchan-card.jpg",
+    "images": [
+      "/src/assets/products/shinchan-card.jpg",
+      "/src/assets/products/shinchan-card-2.jpg",
+      "/src/assets/products/shinchan-card-3.jpg"
+    ],
+    "rating": 4.9,
+    "reviews": 304,
+    "highlights": [
+      "Hand-illustrated Shinchan artwork on front",
+      "Interior filled with cute doodles",
+      "Personalizable message area inside",
+      "Printed on 300gsm art card",
+      "Comes with matching envelope"
+    ],
+    "material": "300gsm Art Card, Non-toxic Inks",
+    "dimensions": "15 cm × 10 cm (folded)",
+    "deliveryInfo": "Ready to ship in 1 business day"
+  }
+]
