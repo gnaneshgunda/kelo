@@ -2,6 +2,7 @@ import { Router, Request, Response } from 'express';
 import { query } from '../db';
 import { authMiddleware } from '../middleware/auth';
 import { OrderItem } from '../types';
+import { sendOrderStatusEmail } from '../utils/mailer';
 
 export const ordersRouter = Router();
 
@@ -144,7 +145,23 @@ ordersRouter.patch('/admin/orders/:id', authMiddleware, async (req: Request, res
       return;
     }
 
-    res.json({ success: true, message: 'Order status updated', data: result.rows[0] });
+    const row = result.rows[0];
+
+    // Send email notification if customer has email
+    if (row.email) {
+      const items = typeof row.items === 'string' ? JSON.parse(row.items) : row.items;
+      sendOrderStatusEmail({
+        id: row.id,
+        customerName: row.customer_name,
+        email: row.email,
+        status,
+        totalAmount: Number(row.total_amount),
+        items,
+        shippingAddress: row.shipping_address,
+      }).catch((err) => console.error('[Mailer] Failed to send status email:', err));
+    }
+
+    res.json({ success: true, message: 'Order status updated', data: row });
   } catch (err: any) {
     res.status(500).json({ success: false, error: 'Failed to update order status' });
   }

@@ -13,5 +13,7 @@ export const config = {
   jwtSecret: process.env.JWT_SECRET || 'kelo_super_secret_jwt_key_2026_postgre_secure',
   jwtExpiresIn: process.env.JWT_EXPIRES_IN || '8h',
   groqApiKey: process.env.GROQ_API_KEY || '',
+  gmailUser: process.env.GMAIL_USER || '',
+  gmailAppPassword: process.env.GMAIL_APP_PASSWORD || '',
   cookieName: 'kelo_admin_token',
 };
