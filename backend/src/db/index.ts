@@ -19,8 +19,10 @@ class PostgresPoolDb implements IDatabase {
   private pool: Pool;
 
   constructor(connectionString: string) {
+    // Strip sslmode from URL so pg doesn't override our ssl config
+    const cleanUrl = connectionString.replace(/[?&]sslmode=[^&]*/g, '').replace(/[?&]$/, '');
     this.pool = new Pool({
-      connectionString,
+      connectionString: cleanUrl,
       ssl: { rejectUnauthorized: false },
     });
   }
