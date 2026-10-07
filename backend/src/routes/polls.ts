@@ -37,9 +37,18 @@ async function getFullPoll(pollId: string): Promise<Poll | null> {
 // ─── 1. Public Endpoints (Read-Only Results) ───────────────
 
 // GET /api/polls (Public - View results only)
-pollsRouter.get('/', async (_req: Request, res: Response): Promise<void> => {
+pollsRouter.get('/', async (req: Request, res: Response): Promise<void> => {
   try {
-    const pRes = await query('SELECT * FROM polls ORDER BY created_at DESC');
+    const eventId = req.query.eventId as string | undefined;
+    let sql = 'SELECT * FROM polls';
+    const params: any[] = [];
+    if (eventId) {
+      sql += ' WHERE event_id = $1';
+      params.push(eventId);
+    }
+    sql += ' ORDER BY created_at DESC';
+
+    const pRes = await query(sql, params);
     const polls: Poll[] = [];
 
     for (const p of pRes.rows) {

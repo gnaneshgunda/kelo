@@ -9,6 +9,8 @@ export async function runMigrations() {
 
   try {
     await exec(schemaSql);
+    // Ensure images column exists for events table in existing databases
+    await exec(`ALTER TABLE events ADD COLUMN IF NOT EXISTS images JSONB DEFAULT '[]'::jsonb;`);
     console.log('[DB] Database migrations completed successfully.');
   } catch (err) {
     console.error('[DB] Migration failed:', err);

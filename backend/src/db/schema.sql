@@ -60,6 +60,7 @@ CREATE TABLE IF NOT EXISTS events (
     date_time VARCHAR(100) NOT NULL,
     location VARCHAR(255) NOT NULL,
     banner_url TEXT,
+    images JSONB DEFAULT '[]'::jsonb,
     event_type VARCHAR(50) NOT NULL, -- 'general', 'hall_day', 'poll', 'painting_competition'
     is_published BOOLEAN DEFAULT FALSE,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,

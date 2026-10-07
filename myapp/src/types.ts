@@ -109,10 +109,21 @@ export interface KeloEvent {
   dateTime: string;
   location: string;
   bannerUrl?: string;
+  images?: string[];
   eventType: 'general' | 'hall_day' | 'poll' | 'painting_competition';
   isPublished: boolean;
   createdAt?: string;
   updatedAt?: string;
+}
+
+export interface CompetitionStatus {
+  success: boolean;
+  eventId: string;
+  count: number;
+  maxCapacity: number;
+  spotsRemaining: number;
+  isFull: boolean;
+  isOpen: boolean;
 }
 
 export interface PollOption {

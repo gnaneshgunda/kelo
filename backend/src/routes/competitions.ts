@@ -71,8 +71,25 @@ competitionsRouter.post('/applications', async (req: Request, res: Response): Pr
       return;
     }
 
-    const id = `app_${Date.now()}`;
     const targetEventId = eventId || 'evt_paint_comp_2026';
+
+    // 1. Strict limit: Accept only the first 50 applications
+    const countRes = await query(
+      'SELECT COUNT(*) as count FROM painting_applications WHERE event_id = $1',
+      [targetEventId]
+    );
+    const currentCount = parseInt(countRes.rows[0]?.count || '0', 10);
+    const MAX_PARTICIPANTS = 50;
+
+    if (currentCount >= MAX_PARTICIPANTS) {
+      res.status(400).json({
+        success: false,
+        error: `Registration closed. The maximum capacity of ${MAX_PARTICIPANTS} participants has been reached.`,
+      });
+      return;
+    }
+
+    const id = `app_${Date.now()}`;
 
     const insertSql = `
       INSERT INTO painting_applications (
@@ -95,14 +112,101 @@ competitionsRouter.post('/applications', async (req: Request, res: Response): Pr
       description.trim(),
     ]);
 
+    const newApp = formatApplication(result.rows[0]);
+
+    // 2. Automatically link participant to the event's Polling Contest
+    try {
+      let pollId: string;
+      const pollCheck = await query('SELECT id FROM polls WHERE event_id = $1', [targetEventId]);
+      if (pollCheck.rowCount === 0) {
+        pollId = `poll_${targetEventId}`;
+        await query(
+          `INSERT INTO polls (id, event_id, title, description, is_open)
+           VALUES ($1, $2, $3, $4, true)`,
+          [
+            pollId,
+            targetEventId,
+            'Painting Competition 2026: Participant Voting',
+            'Official administrative polling on the 50 painting competition participants. Cast your vote for the best artist!',
+          ]
+        );
+      } else {
+        pollId = pollCheck.rows[0].id;
+      }
+
+      const optId = `opt_${id}`;
+      const optText = `${fullName.trim()} (${rollNumber.trim()} • ${hall.trim()} - ${paintingCategory.trim()})`;
+      await query(
+        `INSERT INTO poll_options (id, poll_id, option_text, votes)
+         VALUES ($1, $2, $3, 0)
+         ON CONFLICT (id) DO NOTHING`,
+        [optId, pollId, optText]
+      );
+    } catch (pollErr) {
+      console.error('[Competitions Auto-Poll Option Error]', pollErr);
+    }
+
     res.status(201).json({
       success: true,
-      message: 'Painting competition application submitted successfully! Our team will review your entry.',
-      data: formatApplication(result.rows[0]),
+      message: `Painting competition application submitted successfully! (${currentCount + 1}/${MAX_PARTICIPANTS} spots filled).`,
+      data: newApp,
+      spotsRemaining: Math.max(0, MAX_PARTICIPANTS - (currentCount + 1)),
     });
   } catch (err: any) {
     console.error('[Application Submission Error]', err);
     res.status(500).json({ success: false, error: err.message || 'Failed to submit application' });
+  }
+});
+
+// GET /api/competitions/status (Public - Get application count and capacity)
+competitionsRouter.get('/status', async (req: Request, res: Response): Promise<void> => {
+  try {
+    const eventId = (req.query.eventId as string) || 'evt_paint_comp_2026';
+    const countRes = await query(
+      'SELECT COUNT(*) as count FROM painting_applications WHERE event_id = $1',
+      [eventId]
+    );
+    const count = parseInt(countRes.rows[0]?.count || '0', 10);
+    const maxCapacity = 50;
+    const isFull = count >= maxCapacity;
+
+    res.json({
+      success: true,
+      eventId,
+      count,
+      maxCapacity,
+      spotsRemaining: Math.max(0, maxCapacity - count),
+      isFull,
+      isOpen: !isFull,
+    });
+  } catch (err: any) {
+    res.status(500).json({ success: false, error: 'Failed to retrieve competition status' });
+  }
+});
+
+// GET /api/competitions/participants (Public - View first 50 participants for polling & showcase)
+competitionsRouter.get('/participants', async (req: Request, res: Response): Promise<void> => {
+  try {
+    const eventId = (req.query.eventId as string) || 'evt_paint_comp_2026';
+    const result = await query(
+      'SELECT id, event_id, full_name, roll_number, department, hall, painting_category, description, status, created_at FROM painting_applications WHERE event_id = $1 ORDER BY created_at ASC LIMIT 50',
+      [eventId]
+    );
+    const participants = result.rows.map((r: any) => ({
+      id: r.id,
+      eventId: r.event_id,
+      fullName: r.full_name,
+      rollNumber: r.roll_number,
+      department: r.department,
+      hall: r.hall,
+      paintingCategory: r.painting_category,
+      description: r.description,
+      status: r.status,
+      createdAt: r.created_at,
+    }));
+    res.json({ success: true, count: participants.length, maxCapacity: 50, data: participants });
+  } catch (err: any) {
+    res.status(500).json({ success: false, error: 'Failed to retrieve participants' });
   }
 });
 
@@ -163,5 +267,61 @@ competitionsRouter.patch('/admin/applications/:id', authMiddleware, async (req: 
     });
   } catch (err: any) {
     res.status(500).json({ success: false, error: 'Failed to update application status' });
+  }
+});
+
+// POST /api/admin/competitions/sync-poll (Admin Only - Sync 50 participants into the official poll options)
+competitionsRouter.post('/admin/sync-poll', authMiddleware, async (req: Request, res: Response): Promise<void> => {
+  try {
+    const eventId = req.body.eventId || 'evt_paint_comp_2026';
+
+    let pollId: string;
+    const pollCheck = await query('SELECT id FROM polls WHERE event_id = $1', [eventId]);
+    if (pollCheck.rowCount === 0) {
+      pollId = `poll_${eventId}`;
+      await query(
+        `INSERT INTO polls (id, event_id, title, description, is_open)
+         VALUES ($1, $2, $3, $4, true)`,
+        [
+          pollId,
+          eventId,
+          'Painting Competition 2026: Participant Voting',
+          'Official administrative polling on the 50 painting competition participants. Cast your vote for the best artist!',
+        ]
+      );
+    } else {
+      pollId = pollCheck.rows[0].id;
+    }
+
+    // Fetch the first 50 applications
+    const appsRes = await query(
+      'SELECT * FROM painting_applications WHERE event_id = $1 ORDER BY created_at ASC LIMIT 50',
+      [eventId]
+    );
+
+    let addedCount = 0;
+    for (const app of appsRes.rows) {
+      const optId = `opt_${app.id}`;
+      const optText = `${app.full_name.trim()} (${app.roll_number.trim()} • ${app.hall.trim()} - ${app.painting_category.trim()})`;
+
+      const existingOpt = await query('SELECT id FROM poll_options WHERE id = $1', [optId]);
+      if (existingOpt.rowCount === 0) {
+        await query(
+          'INSERT INTO poll_options (id, poll_id, option_text, votes) VALUES ($1, $2, $3, 0)',
+          [optId, pollId, optText]
+        );
+        addedCount++;
+      }
+    }
+
+    res.json({
+      success: true,
+      message: `Synchronized ${appsRes.rows.length} participants into poll options (${addedCount} newly added).`,
+      pollId,
+      totalParticipants: appsRes.rows.length,
+    });
+  } catch (err: any) {
+    console.error('[Sync Poll Error]', err);
+    res.status(500).json({ success: false, error: err.message || 'Failed to sync poll options' });
   }
 });

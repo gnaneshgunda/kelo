@@ -8,6 +8,7 @@ import type {
   KeloEvent,
   Poll,
   PaintingApplication,
+  CompetitionStatus,
   SiteSettings,
   AdminOrder,
 } from '../types';
@@ -264,6 +265,29 @@ export const api = {
       }
     );
     return res.data;
+  },
+
+  async getCompetitionStatus(eventId?: string): Promise<CompetitionStatus> {
+    const endpoint = eventId ? `/competitions/status?eventId=${encodeURIComponent(eventId)}` : '/competitions/status';
+    const res = await fetchApi<CompetitionStatus>(endpoint);
+    return res;
+  },
+
+  async getCompetitionParticipants(eventId?: string): Promise<PaintingApplication[]> {
+    const endpoint = eventId ? `/competitions/participants?eventId=${encodeURIComponent(eventId)}` : '/competitions/participants';
+    const res = await fetchApi<{ success: boolean; data: PaintingApplication[] }>(endpoint);
+    return res.data || [];
+  },
+
+  async syncCompetitionPoll(eventId?: string): Promise<{ success: boolean; message: string; pollId: string; totalParticipants: number }> {
+    const res = await fetchApi<{ success: boolean; message: string; pollId: string; totalParticipants: number }>(
+      '/competitions/admin/sync-poll',
+      {
+        method: 'POST',
+        body: JSON.stringify({ eventId }),
+      }
+    );
+    return res;
   },
 
   // ─── 8. Website Content & Settings ───────────────────────────

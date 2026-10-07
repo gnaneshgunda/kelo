@@ -23,6 +23,7 @@ async function main() {
     else {
         console.log('✅ Admin password updated successfully for user "admin"!');
     }
+    await (0, db_1.getDb)().close();
     process.exit(0);
 }
 main().catch((err) => {

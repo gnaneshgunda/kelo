@@ -1,18 +1,21 @@
-import { useState } from 'react';
-import { FaTimes, FaPalette, FaCheckCircle } from 'react-icons/fa';
+import { useState, useEffect } from 'react';
+import { FaTimes, FaPalette, FaCheckCircle, FaUsers } from 'react-icons/fa';
 import { api } from '../services/api';
+import type { CompetitionStatus } from '../types';
 import './PaintingApplicationModal.css';
 
 interface PaintingApplicationModalProps {
   eventId: string;
   eventTitle: string;
   onClose: () => void;
+  onSuccess?: () => void;
 }
 
 export default function PaintingApplicationModal({
   eventId,
   eventTitle,
   onClose,
+  onSuccess,
 }: PaintingApplicationModalProps) {
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
@@ -23,13 +26,35 @@ export default function PaintingApplicationModal({
   const [paintingCategory, setPaintingCategory] = useState('Watercolors on Canvas');
   const [description, setDescription] = useState('');
 
+  const [compStatus, setCompStatus] = useState<CompetitionStatus | null>(null);
+  const [loadingStatus, setLoadingStatus] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
+  useEffect(() => {
+    async function fetchStatus() {
+      try {
+        setLoadingStatus(true);
+        const st = await api.getCompetitionStatus(eventId);
+        setCompStatus(st);
+      } catch (err) {
+        console.error('[Competition status]', err);
+      } finally {
+        setLoadingStatus(false);
+      }
+    }
+    fetchStatus();
+  }, [eventId]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMessage(null);
+
+    if (compStatus?.isFull) {
+      setErrorMessage('Registration is closed. All 50 spots have already been filled.');
+      return;
+    }
 
     if (!fullName.trim() || !email.trim() || !phone.trim() || !rollNumber.trim()) {
       setErrorMessage('Please fill in all required contact and participant information.');
@@ -50,6 +75,7 @@ export default function PaintingApplicationModal({
         description: description.trim() || 'Creative artwork submission',
       });
       setSubmitted(true);
+      if (onSuccess) onSuccess();
     } catch (err: unknown) {
       console.error('[Application Submission]', err);
       setErrorMessage(err instanceof Error ? err.message : 'Failed to submit application. Please try again.');
@@ -91,6 +117,42 @@ export default function PaintingApplicationModal({
           </div>
         ) : (
           <form className="paint-modal-form" onSubmit={handleSubmit}>
+            {/* Spots capacity indicator */}
+            <div
+              className={`spots-capacity-badge ${compStatus?.isFull ? 'full' : 'available'}`}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                padding: '0.65rem 0.9rem',
+                marginBottom: '1rem',
+                borderRadius: '8px',
+                backgroundColor: compStatus?.isFull ? '#fee2e2' : '#f0fdf4',
+                color: compStatus?.isFull ? '#991b1b' : '#166534',
+                fontSize: '0.88rem',
+                fontWeight: 500,
+                border: `1px solid ${compStatus?.isFull ? '#fecaca' : '#bbf7d0'}`,
+              }}
+            >
+              <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <FaUsers />
+                {loadingStatus ? (
+                  'Checking spot availability...'
+                ) : compStatus?.isFull ? (
+                  <span>
+                    <strong>Registration Closed:</strong> All 50 participant spots have been filled.
+                  </span>
+                ) : (
+                  <span>
+                    <strong>Strict 50-Participant Limit:</strong> {compStatus?.count ?? 0}/50 spots registered ({compStatus?.spotsRemaining ?? 50} spots remaining)
+                  </span>
+                )}
+              </span>
+              <span style={{ fontSize: '0.78rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                {compStatus?.isFull ? 'Full' : 'Open'}
+              </span>
+            </div>
+
             {errorMessage && <div className="paint-error-box">{errorMessage}</div>}
 
             <div className="form-row-2">
@@ -207,8 +269,17 @@ export default function PaintingApplicationModal({
               <button type="button" className="btn-cancel" onClick={onClose}>
                 Cancel
               </button>
-              <button type="submit" disabled={submitting} className="btn-submit">
-                {submitting ? 'Submitting Application...' : 'Submit Application'}
+              <button
+                type="submit"
+                disabled={submitting || compStatus?.isFull}
+                className="btn-submit"
+                style={compStatus?.isFull ? { opacity: 0.6, cursor: 'not-allowed', backgroundColor: '#94a3b8' } : {}}
+              >
+                {compStatus?.isFull
+                  ? 'Registration Closed (50/50 Full)'
+                  : submitting
+                  ? 'Submitting Application...'
+                  : 'Submit Application'}
               </button>
             </div>
           </form>

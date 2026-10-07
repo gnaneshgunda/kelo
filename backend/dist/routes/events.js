@@ -6,13 +6,17 @@ const db_1 = require("../db");
 const auth_1 = require("../middleware/auth");
 exports.eventsRouter = (0, express_1.Router)();
 function formatEvent(row) {
+    const images = typeof row.images === 'string'
+        ? JSON.parse(row.images)
+        : (Array.isArray(row.images) ? row.images : (row.banner_url ? [row.banner_url] : []));
     return {
         id: row.id,
         title: row.title,
         description: row.description,
         dateTime: row.date_time,
         location: row.location,
-        bannerUrl: row.banner_url,
+        bannerUrl: row.banner_url || (images.length > 0 ? images[0] : undefined),
+        images,
         eventType: row.event_type,
         isPublished: row.is_published === true,
         createdAt: row.created_at,
@@ -66,7 +70,7 @@ exports.eventsRouter.get('/admin/list', auth_1.authMiddleware, async (_req, res)
 // POST /api/admin/events (Admin Only)
 exports.eventsRouter.post('/admin/create', auth_1.authMiddleware, async (req, res) => {
     try {
-        const { title, description, dateTime, location, bannerUrl, eventType, isPublished } = req.body;
+        const { title, description, dateTime, location, bannerUrl, images, eventType, isPublished } = req.body;
         if (!title || !description || !dateTime || !location) {
             res.status(400).json({ success: false, error: 'Title, description, dateTime, and location are required' });
             return;
@@ -74,12 +78,14 @@ exports.eventsRouter.post('/admin/create', auth_1.authMiddleware, async (req, re
         const id = req.body.id || `evt_${Date.now()}`;
         const type = eventType || 'general';
         const published = isPublished === true;
+        const imgList = Array.isArray(images) && images.length > 0 ? images : (bannerUrl ? [bannerUrl] : []);
+        const primaryBanner = imgList.length > 0 ? imgList[0] : (bannerUrl || null);
         const insertSql = `
-      INSERT INTO events (id, title, description, date_time, location, banner_url, event_type, is_published)
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+      INSERT INTO events (id, title, description, date_time, location, banner_url, images, event_type, is_published)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
       RETURNING *
     `;
-        const result = await (0, db_1.query)(insertSql, [id, title, description, dateTime, location, bannerUrl || null, type, published]);
+        const result = await (0, db_1.query)(insertSql, [id, title, description, dateTime, location, primaryBanner, JSON.stringify(imgList), type, published]);
         res.status(201).json({
             success: true,
             message: 'Event created successfully',
@@ -105,17 +111,18 @@ exports.eventsRouter.put('/admin/:id', auth_1.authMiddleware, async (req, res) =
         const description = b.description !== undefined ? b.description : cur.description;
         const dateTime = b.dateTime !== undefined ? b.dateTime : cur.date_time;
         const location = b.location !== undefined ? b.location : cur.location;
-        const bannerUrl = b.bannerUrl !== undefined ? b.bannerUrl : cur.banner_url;
+        const imgList = b.images !== undefined ? b.images : (typeof cur.images === 'string' ? JSON.parse(cur.images) : (cur.images || (cur.banner_url ? [cur.banner_url] : [])));
+        const bannerUrl = b.bannerUrl !== undefined ? b.bannerUrl : (imgList.length > 0 ? imgList[0] : cur.banner_url);
         const eventType = b.eventType !== undefined ? b.eventType : cur.event_type;
         const isPublished = b.isPublished !== undefined ? Boolean(b.isPublished) : cur.is_published;
         const updateSql = `
       UPDATE events SET
         title = $1, description = $2, date_time = $3, location = $4,
-        banner_url = $5, event_type = $6, is_published = $7, updated_at = CURRENT_TIMESTAMP
-      WHERE id = $8
+        banner_url = $5, images = $6, event_type = $7, is_published = $8, updated_at = CURRENT_TIMESTAMP
+      WHERE id = $9
       RETURNING *
     `;
-        const result = await (0, db_1.query)(updateSql, [title, description, dateTime, location, bannerUrl, eventType, isPublished, id]);
+        const result = await (0, db_1.query)(updateSql, [title, description, dateTime, location, bannerUrl, JSON.stringify(imgList), eventType, isPublished, id]);
         res.json({
             success: true,
             message: 'Event updated successfully',

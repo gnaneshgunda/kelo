@@ -32,9 +32,17 @@ async function getFullPoll(pollId) {
 }
 // ─── 1. Public Endpoints (Read-Only Results) ───────────────
 // GET /api/polls (Public - View results only)
-exports.pollsRouter.get('/', async (_req, res) => {
+exports.pollsRouter.get('/', async (req, res) => {
     try {
-        const pRes = await (0, db_1.query)('SELECT * FROM polls ORDER BY created_at DESC');
+        const eventId = req.query.eventId;
+        let sql = 'SELECT * FROM polls';
+        const params = [];
+        if (eventId) {
+            sql += ' WHERE event_id = $1';
+            params.push(eventId);
+        }
+        sql += ' ORDER BY created_at DESC';
+        const pRes = await (0, db_1.query)(sql, params);
         const polls = [];
         for (const p of pRes.rows) {
             const full = await getFullPoll(p.id);

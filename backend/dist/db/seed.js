@@ -160,6 +160,19 @@ async function runSeeds() {
         ('opt_3', $1, 'Custom Beaded Couple Bracelets', 5),
         ('opt_4', $1, 'Geometric Wooden Polaroid Stand', 3)`, [pollId]);
         console.log('[DB] Seeded initial events and polling contest.');
+        // Create Poll for Painting Competition if not present
+        const paintPollId = 'poll_paint_comp_2026';
+        const existingPaintPoll = await (0, index_1.query)('SELECT id FROM polls WHERE id = $1', [paintPollId]);
+        if (existingPaintPoll.rowCount === 0) {
+            await (0, index_1.query)(`INSERT INTO polls (id, event_id, title, description, is_open)
+         VALUES ($1, $2, $3, $4, true)
+         ON CONFLICT (id) DO NOTHING`, [
+                paintPollId,
+                'evt_paint_comp_2026',
+                'Rang-e-KGP 2026: Painting Participants Polling Contest',
+                'Official polling on the 50 registered painting competition participants. Cast your vote for the best artist!',
+            ]);
+        }
     }
     console.log('[DB] Database seeding complete.');
 }

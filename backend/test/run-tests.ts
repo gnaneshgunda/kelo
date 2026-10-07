@@ -279,6 +279,124 @@ async function runTests() {
     }
   });
 
+  // 14. Multi-image product creation & retrieval (3-4 images)
+  await test('Admin can create a product with multiple images (e.g. 4 photos) and public retrieves them all', async () => {
+    const multiImages = [
+      'https://res.cloudinary.com/zo7u3tba/image/upload/v1787248483/Heart-frame.jpg',
+      'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?w=600',
+      'https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=600',
+      'https://images.unsplash.com/photo-1526047932273-341f2a7631f9?w=600',
+    ];
+
+    const createRes = await fetch(`${BASE_URL}/api/products`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${adminToken}`,
+      },
+      body: JSON.stringify({
+        name: 'Handcrafted Multi-Photo Mosaic',
+        description: 'Mosaic frame with multiple photos',
+        price: 799,
+        category: 'Frames',
+        imageUrl: multiImages[0],
+        images: multiImages,
+        isActive: true,
+      }),
+    });
+    const createData = await createRes.json();
+    if (createRes.status !== 201 || !createData.success) {
+      throw new Error(`Multi-image product creation failed: ${JSON.stringify(createData)}`);
+    }
+
+    const prodId = createData.data.id;
+    const getRes = await fetch(`${BASE_URL}/api/products/${prodId}`);
+    const getData = await getRes.json();
+    if (getRes.status !== 200 || !getData.data.images || getData.data.images.length !== 4) {
+      throw new Error(`Expected 4 images, got: ${JSON.stringify(getData.data.images)}`);
+    }
+  });
+
+  // 15. Multi-image event creation & retrieval (3-4 images)
+  await test('Admin can create an event with multiple images and public retrieves them all', async () => {
+    const eventImages = [
+      'https://images.unsplash.com/photo-1452860606245-08befc0ff44b?w=600',
+      'https://images.unsplash.com/photo-1460661419200-fd435f34d1c7?w=600',
+      'https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=600',
+    ];
+
+    const createRes = await fetch(`${BASE_URL}/api/events/admin/create`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${adminToken}`,
+      },
+      body: JSON.stringify({
+        title: 'Spring Fine Arts Gala',
+        description: 'Exhibition of campus paintings and crafts.',
+        dateTime: 'April 12, 2026 • 6:00 PM',
+        location: 'Nehru Museum of Asian Art',
+        eventType: 'painting_competition',
+        bannerUrl: eventImages[0],
+        images: eventImages,
+        isPublished: true,
+      }),
+    });
+    const createData = await createRes.json();
+    if (createRes.status !== 201 || !createData.success) {
+      throw new Error(`Multi-image event creation failed: ${JSON.stringify(createData)}`);
+    }
+
+    const evtId = createData.data.id;
+    const getRes = await fetch(`${BASE_URL}/api/events/${evtId}`);
+    const getData = await getRes.json();
+    if (getRes.status !== 200 || !getData.data.images || getData.data.images.length !== 3) {
+      throw new Error(`Expected 3 event images, got: ${JSON.stringify(getData.data.images)}`);
+    }
+  });
+
+  // 16. Competition status & participant capacity
+  await test('Public can query competition status and see spots remaining out of 50', async () => {
+    const res = await fetch(`${BASE_URL}/api/competitions/status?eventId=evt_paint_comp_2026`);
+    const data = await res.json();
+    if (res.status !== 200 || !data.success || data.maxCapacity !== 50) {
+      throw new Error(`Competition status invalid: ${JSON.stringify(data)}`);
+    }
+    if (typeof data.spotsRemaining !== 'number' || data.spotsRemaining > 50) {
+      throw new Error(`Spots remaining calculation error: ${data.spotsRemaining}`);
+    }
+  });
+
+  // 17. Painting competition participant automatically links to poll
+  await test('Painting competition applicant is automatically added as an option in the event poll', async () => {
+    const pollRes = await fetch(`${BASE_URL}/api/polls?eventId=evt_paint_comp_2026`);
+    const pollData = await pollRes.json();
+    if (pollRes.status !== 200 || !pollData.success || pollData.data.length === 0) {
+      throw new Error(`Failed to find painting competition poll: ${JSON.stringify(pollData)}`);
+    }
+    const paintPoll = pollData.data[0];
+    const option = paintPoll.options.find((o: any) => o.optionText.includes('Ananya Sen'));
+    if (!option) {
+      throw new Error(`Participant Ananya Sen not found in poll options: ${JSON.stringify(paintPoll.options)}`);
+    }
+  });
+
+  // 18. Admin sync-poll endpoint
+  await test('Admin can sync participants into the painting poll via sync-poll endpoint', async () => {
+    const res = await fetch(`${BASE_URL}/api/competitions/admin/sync-poll`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${adminToken}`,
+      },
+      body: JSON.stringify({ eventId: 'evt_paint_comp_2026' }),
+    });
+    const data = await res.json();
+    if (res.status !== 200 || !data.success || !data.pollId) {
+      throw new Error(`Sync poll failed: ${JSON.stringify(data)}`);
+    }
+  });
+
   console.log(`\n========================================`);
   console.log(`TEST SUMMARY: ${passed} Passed, ${failed} Failed`);
   console.log(`========================================`);

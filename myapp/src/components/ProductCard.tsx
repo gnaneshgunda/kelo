@@ -37,6 +37,26 @@ export default function ProductCard({ product }: ProductCardProps) {
         <div className="product-image-container">
           <img src={product.imageUrl} alt={product.name} className="product-image" loading="lazy" />
           <span className="product-category-badge">{product.category}</span>
+          {product.images && product.images.length > 1 && (
+            <span
+              className="multi-img-badge"
+              style={{
+                position: 'absolute',
+                bottom: '0.5rem',
+                right: '0.5rem',
+                background: 'rgba(15, 23, 42, 0.75)',
+                color: '#ffffff',
+                fontSize: '0.72rem',
+                fontWeight: 600,
+                padding: '0.2rem 0.55rem',
+                borderRadius: '6px',
+                backdropFilter: 'blur(4px)',
+                zIndex: 2,
+              }}
+            >
+              📷 {product.images.length} photos
+            </span>
+          )}
           <span className="view-detail-hint">View Details</span>
         </div>
         <div className="product-info">

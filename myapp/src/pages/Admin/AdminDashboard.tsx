@@ -117,12 +117,21 @@ export default function AdminDashboard() {
     e.preventDefault();
     if (!editingProduct || !editingProduct.name) return;
 
+    // Clean and validate multiple images
+    const rawImages = editingProduct.images || (editingProduct.imageUrl ? [editingProduct.imageUrl] : []);
+    const validImages = rawImages.filter((img) => typeof img === 'string' && img.trim().length > 0);
+    const finalProduct = {
+      ...editingProduct,
+      images: validImages.length > 0 ? validImages : (editingProduct.imageUrl ? [editingProduct.imageUrl] : []),
+      imageUrl: validImages[0] || editingProduct.imageUrl || '',
+    };
+
     try {
       if (editingProduct.id && products.some((p) => p.id === editingProduct.id)) {
-        await api.updateProduct(editingProduct.id, editingProduct);
+        await api.updateProduct(editingProduct.id, finalProduct);
         showFeedback('Product updated successfully!');
       } else {
-        await api.addProduct(editingProduct);
+        await api.addProduct(finalProduct);
         showFeedback('New product added to catalog!');
       }
       setEditingProduct(null);
@@ -158,18 +167,37 @@ export default function AdminDashboard() {
     e.preventDefault();
     if (!editingEvent || !editingEvent.title) return;
 
+    // Clean and validate multiple images
+    const rawImages = editingEvent.images || (editingEvent.bannerUrl ? [editingEvent.bannerUrl] : []);
+    const validImages = rawImages.filter((img) => typeof img === 'string' && img.trim().length > 0);
+    const finalEvent = {
+      ...editingEvent,
+      images: validImages.length > 0 ? validImages : (editingEvent.bannerUrl ? [editingEvent.bannerUrl] : []),
+      bannerUrl: validImages[0] || editingEvent.bannerUrl || '',
+    };
+
     try {
       if (editingEvent.id && events.some((evt) => evt.id === editingEvent.id)) {
-        await api.updateEvent(editingEvent.id, editingEvent);
+        await api.updateEvent(editingEvent.id, finalEvent);
         showFeedback('Event updated successfully!');
       } else {
-        await api.createEvent(editingEvent);
+        await api.createEvent(finalEvent);
         showFeedback('New event created!');
       }
       setEditingEvent(null);
       loadTabContent('events');
     } catch (err: unknown) {
       showFeedback(err instanceof Error ? err.message : 'Error saving event', 'error');
+    }
+  };
+
+  const handleSyncCompetitionPoll = async (eventId: string = 'evt_paint_comp_2026') => {
+    try {
+      const res = await api.syncCompetitionPoll(eventId);
+      showFeedback(`⚡ ${res.message}`);
+      await loadTabContent('polls');
+    } catch (err: unknown) {
+      showFeedback(err instanceof Error ? err.message : 'Failed to sync competition poll', 'error');
     }
   };
 
@@ -392,7 +420,14 @@ export default function AdminDashboard() {
                       <td className="product-title-cell">
                         <img src={p.imageUrl} alt={p.name} className="table-thumb" />
                         <div>
-                          <strong>{p.name}</strong>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+                            <strong>{p.name}</strong>
+                            {p.images && p.images.length > 1 && (
+                              <span style={{ fontSize: '0.72rem', padding: '0.1rem 0.4rem', borderRadius: '4px', backgroundColor: '#e0f2fe', color: '#0369a1', fontWeight: 600 }}>
+                                📷 {p.images.length} photos
+                              </span>
+                            )}
+                          </div>
                           <span className="prod-id-tag">ID: {p.id}</span>
                         </div>
                       </td>
@@ -466,7 +501,14 @@ export default function AdminDashboard() {
                   {events.map((evt) => (
                     <tr key={evt.id}>
                       <td>
-                        <strong>{evt.title}</strong>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                          <strong>{evt.title}</strong>
+                          {evt.images && evt.images.length > 1 && (
+                            <span style={{ fontSize: '0.72rem', padding: '0.1rem 0.4rem', borderRadius: '4px', backgroundColor: '#fef3c7', color: '#92400e', fontWeight: 600 }}>
+                              📷 {evt.images.length} photos
+                            </span>
+                          )}
+                        </div>
                         <p className="table-sub-desc">{evt.description.slice(0, 60)}...</p>
                       </td>
                       <td>
@@ -607,7 +649,40 @@ export default function AdminDashboard() {
             <div className="pane-header-row">
               <div>
                 <h2>Painting Competition Applications</h2>
-                <p>Participant entries submitted via the public Events page (NO artwork uploads).</p>
+                <p>Participant entries submitted via the public Events page (Strict quota: First 50 applications only).</p>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginTop: '0.4rem' }}>
+                  <span style={{
+                    padding: '0.25rem 0.65rem',
+                    borderRadius: '9999px',
+                    fontSize: '0.8rem',
+                    fontWeight: 700,
+                    backgroundColor: applications.length >= 50 ? '#fee2e2' : '#fef3c7',
+                    color: applications.length >= 50 ? '#991b1b' : '#92400e',
+                    border: `1px solid ${applications.length >= 50 ? '#fecaca' : '#fde68a'}`,
+                  }}>
+                    Quota: {applications.length}/50 Registered {applications.length >= 50 ? '(FULL)' : ''}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => handleSyncCompetitionPoll('evt_paint_comp_2026')}
+                    style={{
+                      padding: '0.3rem 0.8rem',
+                      borderRadius: '6px',
+                      backgroundColor: '#d97706',
+                      color: '#ffffff',
+                      border: 'none',
+                      fontSize: '0.8rem',
+                      fontWeight: 600,
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.35rem',
+                    }}
+                    title="Populate the first 50 participants into the official Polling Contest for administrative voting"
+                  >
+                    <FaVoteYea size={12} /> Sync 50 Participants to Polling Contest
+                  </button>
+                </div>
               </div>
               <div className="app-filter-tabs">
                 {(['ALL', 'PENDING', 'ACCEPTED', 'REJECTED'] as const).map((st) => (
@@ -962,14 +1037,139 @@ export default function AdminDashboard() {
                 </div>
               </div>
 
-              <div className="form-field">
-                <label>Image URL (Cloudinary or Web)</label>
-                <input
-                  type="url"
-                  required
-                  value={editingProduct.imageUrl || ''}
-                  onChange={(e) => setEditingProduct({ ...editingProduct, imageUrl: e.target.value })}
-                />
+              {/* Multi-Image Manager for Product */}
+              <div className="form-field multi-images-section" style={{ background: '#f8fafc', padding: '0.85rem', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.35rem' }}>
+                  <label style={{ margin: 0, fontWeight: 700, fontSize: '0.9rem' }}>
+                    Product Images (Add 1, 2, 3, 4, or more images)
+                  </label>
+                  <span style={{ fontSize: '0.78rem', color: '#64748b', fontWeight: 600 }}>
+                    {((editingProduct.images && editingProduct.images.length > 0) ? editingProduct.images : [editingProduct.imageUrl || '']).length} Image(s)
+                  </span>
+                </div>
+                <p style={{ fontSize: '0.78rem', color: '#64748b', margin: '0 0 0.65rem 0' }}>
+                  Provide multiple photos (3 or 4). Image #1 serves as the primary storefront card thumbnail. All images display in the product gallery.
+                </p>
+
+                {((editingProduct.images && editingProduct.images.length > 0)
+                  ? editingProduct.images
+                  : [editingProduct.imageUrl || '']
+                ).map((imgUrl, idx) => (
+                  <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
+                    <div style={{ width: '42px', height: '42px', borderRadius: '6px', border: '1px solid #cbd5e1', overflow: 'hidden', flexShrink: 0, background: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      {imgUrl ? (
+                        <img src={imgUrl} alt={`Thumb ${idx + 1}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                      ) : (
+                        <span style={{ fontSize: '0.68rem', color: '#94a3b8' }}>#{idx + 1}</span>
+                      )}
+                    </div>
+                    <input
+                      type="text"
+                      placeholder={`Image URL #${idx + 1}${idx === 0 ? ' (Primary Cover)' : ''}`}
+                      value={imgUrl}
+                      onChange={(e) => {
+                        const cur = [...((editingProduct.images && editingProduct.images.length > 0) ? editingProduct.images : [editingProduct.imageUrl || ''])];
+                        cur[idx] = e.target.value;
+                        setEditingProduct({
+                          ...editingProduct,
+                          images: cur,
+                          imageUrl: cur[0] || '',
+                        });
+                      }}
+                      style={{ flex: 1, padding: '0.45rem 0.65rem', fontSize: '0.85rem' }}
+                    />
+                    <label
+                      title="Upload from device"
+                      style={{
+                        padding: '0.45rem 0.65rem',
+                        backgroundColor: '#e2e8f0',
+                        border: '1px solid #cbd5e1',
+                        borderRadius: '6px',
+                        cursor: 'pointer',
+                        fontSize: '0.78rem',
+                        fontWeight: 600,
+                        color: '#334155',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.2rem',
+                        whiteSpace: 'nowrap',
+                      }}
+                    >
+                      📁 Upload
+                      <input
+                        type="file"
+                        accept="image/*"
+                        style={{ display: 'none' }}
+                        onChange={(e) => {
+                          const file = e.target.files?.[0];
+                          if (file) {
+                            const reader = new FileReader();
+                            reader.onload = (ev) => {
+                              const result = ev.target?.result as string;
+                              const cur = [...((editingProduct.images && editingProduct.images.length > 0) ? editingProduct.images : [editingProduct.imageUrl || ''])];
+                              cur[idx] = result;
+                              setEditingProduct({
+                                ...editingProduct,
+                                images: cur,
+                                imageUrl: cur[0] || '',
+                              });
+                            };
+                            reader.readAsDataURL(file);
+                          }
+                        }}
+                      />
+                    </label>
+                    <button
+                      type="button"
+                      title="Remove image"
+                      onClick={() => {
+                        const cur = [...((editingProduct.images && editingProduct.images.length > 0) ? editingProduct.images : [editingProduct.imageUrl || ''])];
+                        cur.splice(idx, 1);
+                        const nextList = cur.length > 0 ? cur : [''];
+                        setEditingProduct({
+                          ...editingProduct,
+                          images: nextList,
+                          imageUrl: nextList[0] || '',
+                        });
+                      }}
+                      style={{
+                        padding: '0.45rem 0.6rem',
+                        backgroundColor: '#fee2e2',
+                        border: '1px solid #fecaca',
+                        color: '#b91c1c',
+                        borderRadius: '6px',
+                        cursor: 'pointer',
+                      }}
+                    >
+                      <FaTimes size={12} />
+                    </button>
+                  </div>
+                ))}
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    const cur = [...((editingProduct.images && editingProduct.images.length > 0) ? editingProduct.images : [editingProduct.imageUrl || ''])];
+                    cur.push('');
+                    setEditingProduct({ ...editingProduct, images: cur });
+                  }}
+                  style={{
+                    marginTop: '0.35rem',
+                    padding: '0.4rem 0.85rem',
+                    backgroundColor: '#ffffff',
+                    border: '1px dashed #0284c7',
+                    borderRadius: '6px',
+                    color: '#0284c7',
+                    fontSize: '0.8rem',
+                    fontWeight: 600,
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.35rem',
+                  }}
+                >
+                  <FaPlus size={10} /> + Add Another Image (e.g. 3 or 4 images)
+                </button>
               </div>
 
               <div className="form-field">
@@ -1044,13 +1244,139 @@ export default function AdminDashboard() {
                 />
               </div>
 
-              <div className="form-field">
-                <label>Banner Image URL</label>
-                <input
-                  type="url"
-                  value={editingEvent.bannerUrl || ''}
-                  onChange={(e) => setEditingEvent({ ...editingEvent, bannerUrl: e.target.value })}
-                />
+              {/* Multi-Image Manager for Event */}
+              <div className="form-field multi-images-section" style={{ background: '#f8fafc', padding: '0.85rem', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.35rem' }}>
+                  <label style={{ margin: 0, fontWeight: 700, fontSize: '0.9rem' }}>
+                    Event Images & Banners (Add 1, 2, 3, 4, or more images)
+                  </label>
+                  <span style={{ fontSize: '0.78rem', color: '#64748b', fontWeight: 600 }}>
+                    {((editingEvent.images && editingEvent.images.length > 0) ? editingEvent.images : [editingEvent.bannerUrl || '']).length} Image(s)
+                  </span>
+                </div>
+                <p style={{ fontSize: '0.78rem', color: '#64748b', margin: '0 0 0.65rem 0' }}>
+                  Provide multiple photos (e.g. 3 or 4 photos). Image #1 serves as the primary event banner. All photos appear in the event photo gallery!
+                </p>
+
+                {((editingEvent.images && editingEvent.images.length > 0)
+                  ? editingEvent.images
+                  : [editingEvent.bannerUrl || '']
+                ).map((imgUrl, idx) => (
+                  <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
+                    <div style={{ width: '42px', height: '42px', borderRadius: '6px', border: '1px solid #cbd5e1', overflow: 'hidden', flexShrink: 0, background: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      {imgUrl ? (
+                        <img src={imgUrl} alt={`Event Thumb ${idx + 1}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                      ) : (
+                        <span style={{ fontSize: '0.68rem', color: '#94a3b8' }}>#{idx + 1}</span>
+                      )}
+                    </div>
+                    <input
+                      type="text"
+                      placeholder={`Event Image URL #${idx + 1}${idx === 0 ? ' (Primary Banner)' : ''}`}
+                      value={imgUrl}
+                      onChange={(e) => {
+                        const cur = [...((editingEvent.images && editingEvent.images.length > 0) ? editingEvent.images : [editingEvent.bannerUrl || ''])];
+                        cur[idx] = e.target.value;
+                        setEditingEvent({
+                          ...editingEvent,
+                          images: cur,
+                          bannerUrl: cur[0] || '',
+                        });
+                      }}
+                      style={{ flex: 1, padding: '0.45rem 0.65rem', fontSize: '0.85rem' }}
+                    />
+                    <label
+                      title="Upload from device"
+                      style={{
+                        padding: '0.45rem 0.65rem',
+                        backgroundColor: '#e2e8f0',
+                        border: '1px solid #cbd5e1',
+                        borderRadius: '6px',
+                        cursor: 'pointer',
+                        fontSize: '0.78rem',
+                        fontWeight: 600,
+                        color: '#334155',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.2rem',
+                        whiteSpace: 'nowrap',
+                      }}
+                    >
+                      📁 Upload
+                      <input
+                        type="file"
+                        accept="image/*"
+                        style={{ display: 'none' }}
+                        onChange={(e) => {
+                          const file = e.target.files?.[0];
+                          if (file) {
+                            const reader = new FileReader();
+                            reader.onload = (ev) => {
+                              const result = ev.target?.result as string;
+                              const cur = [...((editingEvent.images && editingEvent.images.length > 0) ? editingEvent.images : [editingEvent.bannerUrl || ''])];
+                              cur[idx] = result;
+                              setEditingEvent({
+                                ...editingEvent,
+                                images: cur,
+                                bannerUrl: cur[0] || '',
+                              });
+                            };
+                            reader.readAsDataURL(file);
+                          }
+                        }}
+                      />
+                    </label>
+                    <button
+                      type="button"
+                      title="Remove image"
+                      onClick={() => {
+                        const cur = [...((editingEvent.images && editingEvent.images.length > 0) ? editingEvent.images : [editingEvent.bannerUrl || ''])];
+                        cur.splice(idx, 1);
+                        const nextList = cur.length > 0 ? cur : [''];
+                        setEditingEvent({
+                          ...editingEvent,
+                          images: nextList,
+                          bannerUrl: nextList[0] || '',
+                        });
+                      }}
+                      style={{
+                        padding: '0.45rem 0.6rem',
+                        backgroundColor: '#fee2e2',
+                        border: '1px solid #fecaca',
+                        color: '#b91c1c',
+                        borderRadius: '6px',
+                        cursor: 'pointer',
+                      }}
+                    >
+                      <FaTimes size={12} />
+                    </button>
+                  </div>
+                ))}
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    const cur = [...((editingEvent.images && editingEvent.images.length > 0) ? editingEvent.images : [editingEvent.bannerUrl || ''])];
+                    cur.push('');
+                    setEditingEvent({ ...editingEvent, images: cur });
+                  }}
+                  style={{
+                    marginTop: '0.35rem',
+                    padding: '0.4rem 0.85rem',
+                    backgroundColor: '#ffffff',
+                    border: '1px dashed #d97706',
+                    borderRadius: '6px',
+                    color: '#d97706',
+                    fontSize: '0.8rem',
+                    fontWeight: 600,
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.35rem',
+                  }}
+                >
+                  <FaPlus size={10} /> + Add Another Image (e.g. 3 or 4 images)
+                </button>
               </div>
 
               <div className="form-field">
