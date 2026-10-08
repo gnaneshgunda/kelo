@@ -17,7 +17,7 @@ export default function Nav() {
         <div className="top-banner-content">
           <span className="banner-text">✨ Handcrafted Gifts & Artisanal Crafts</span>
           <span className="banner-divider">•</span>
-          <span className="banner-text">Free Shipping on Orders Over $50</span>
+          <span className="banner-text">Free Delivery on Orders Over ₹500</span>
         </div>
       </div>
 
