@@ -70,7 +70,17 @@ export default function Home() {
       {/* Dynamic Product Grid */}
       <div className="products-grid">
         {loading && products.length === 0 ? (
-          <div className="loading-spinner">Loading handcrafted products...</div>
+          Array.from({ length: 6 }).map((_, i) => (
+            <div key={i} className="skeleton-card">
+              <div className="skeleton-img" />
+              <div className="skeleton-body">
+                <div className="skeleton-line medium" />
+                <div className="skeleton-line short" />
+                <div className="skeleton-line full" />
+                <div className="skeleton-line short" />
+              </div>
+            </div>
+          ))
         ) : (
           filteredProducts.map((product) => (
             <ProductCard key={product.id} product={product} />

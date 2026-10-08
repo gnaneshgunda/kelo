@@ -12,6 +12,7 @@ interface ProductCardProps {
 export default function ProductCard({ product }: ProductCardProps) {
   const { cartItems, addToCart, updateQuantity } = useCart();
   const [showDetail, setShowDetail] = useState(false);
+  const [imgLoaded, setImgLoaded] = useState(false);
 
   const cartItem = cartItems.find((item) => item.product.id === product.id);
   const quantity = cartItem ? cartItem.quantity : 0;
@@ -35,7 +36,14 @@ export default function ProductCard({ product }: ProductCardProps) {
     <>
       <div className="product-card" onClick={() => setShowDetail(true)} role="button" tabIndex={0} onKeyDown={(e) => e.key === 'Enter' && setShowDetail(true)}>
         <div className="product-image-container">
-          <img src={product.imageUrl} alt={product.name} className="product-image" loading="lazy" />
+          {!imgLoaded && <div className="img-shimmer" />}
+          <img
+            src={product.imageUrl}
+            alt={product.name}
+            className={`product-image${imgLoaded ? ' loaded' : ''}`}
+            loading="lazy"
+            onLoad={() => setImgLoaded(true)}
+          />
           <span className="product-category-badge">{product.category}</span>
           {product.images && product.images.length > 1 && (
             <span
