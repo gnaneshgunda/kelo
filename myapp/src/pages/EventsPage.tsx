@@ -19,6 +19,7 @@ export default function EventsPage() {
   const [polls, setPolls] = useState<Poll[]>([]);
   const [compStatuses, setCompStatuses] = useState<Record<string, CompetitionStatus>>({});
   const [activeImageIndexes, setActiveImageIndexes] = useState<Record<string, number>>({});
+  const [loadedImages, setLoadedImages] = useState<Record<string, boolean>>({});
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState<string>('all');
   const [activeModalEvent, setActiveModalEvent] = useState<{ id: string; title: string } | null>(null);
@@ -122,9 +123,19 @@ export default function EventsPage() {
       </div>
 
       {loading ? (
-        <div className="events-loading">
-          <div className="spinner"></div>
-          <p>Loading campus events and polling contests...</p>
+        <div className="events-grid">
+          {Array.from({ length: 3 }).map((_, i) => (
+            <div key={i} className="event-skeleton-card">
+              <div className="event-skeleton-img" />
+              <div className="event-skeleton-body">
+                <div className="skeleton-line medium" />
+                <div className="skeleton-line full" />
+                <div className="skeleton-line full" />
+                <div className="skeleton-line short" />
+                <div className="skeleton-line short" />
+              </div>
+            </div>
+          ))}
         </div>
       ) : (
         <div className="events-grid">
@@ -154,7 +165,13 @@ export default function EventsPage() {
                 <article key={evt.id} className={`event-card ${evt.eventType}`}>
                   {currentImg && (
                     <div className="event-banner-wrap" style={{ position: 'relative' }}>
-                      <img src={currentImg} alt={evt.title} className="event-banner-img" />
+                      <img
+                        src={currentImg}
+                        alt={evt.title}
+                        className={`event-banner-img${loadedImages[`${evt.id}_${currentImgIdx}`] ? ' loaded' : ''}`}
+                        loading="lazy"
+                        onLoad={() => setLoadedImages((prev) => ({ ...prev, [`${evt.id}_${currentImgIdx}`]: true }))}
+                      />
 
                       <span className={`event-type-tag ${evt.eventType}`}>
                         {evt.eventType === 'painting_competition' && '🎨 Painting Contest'}
