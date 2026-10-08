@@ -90,8 +90,9 @@ export default function Nav() {
 
       {/* Wooden Tag Board */}
       <div className={`wood-board ${menuOpen ? 'open' : ''}`} aria-hidden={!menuOpen}>
-        {/* Rope hanging from top */}
+        {/* Close X + Rope from top */}
         <div className="wood-rope-top">
+          <button className="wood-close-x" onClick={() => setMenuOpen(false)} aria-label="Close menu">✕</button>
           <div className="wood-nail" />
           <div className="wood-rope-line" />
         </div>
@@ -100,16 +101,22 @@ export default function Nav() {
         <div className="wood-tags">
           {navItems.map((item, i) => (
             <div key={item.path} className="wood-tag-wrap">
-              {/* Rope connector between tags */}
-              {i > 0 && <div className="wood-tag-rope" />}
+              {/* Rope connector between tags — both sides */}
+              {i > 0 && (
+                <div className="wood-tag-rope-row">
+                  <div className="wood-tag-rope" />
+                  <div className="wood-tag-rope" />
+                </div>
+              )}
 
               <Link
                 to={item.path}
                 className={`wood-tag ${isActive(item.path) ? 'active' : ''}`}
                 onClick={() => setMenuOpen(false)}
               >
-                {/* Tag hole */}
-                <div className="wood-tag-hole" />
+                {/* Tag holes — left and right */}
+                <div className="wood-tag-hole left" />
+                <div className="wood-tag-hole right" />
                 <span className="wood-tag-emoji">{item.emoji}</span>
                 <span className="wood-tag-label">{item.label}</span>
                 {item.isCart && cartCount > 0 && (

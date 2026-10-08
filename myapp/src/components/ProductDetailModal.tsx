@@ -164,8 +164,6 @@ export default function ProductDetailModal({ product, onClose }: ProductDetailMo
             {/* Price */}
             <div className="modal-price-row">
               <span className="modal-price">₹{currentProduct.price.toFixed(2)}</span>
-              <span className="modal-original-price">₹{(currentProduct.price * 1.2).toFixed(2)}</span>
-              <span className="modal-discount-badge">20% OFF</span>
             </div>
 
             {/* Description */}

@@ -278,6 +278,25 @@
   pointer-events: all;
 }
 
+/* Close X button */
+.wood-close-x {
+  background: linear-gradient(135deg, #5C3317, #3C2212);
+  border: none;
+  color: #F7EBE1;
+  font-size: 1rem;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.35);
+  margin-bottom: 6px;
+  transition: transform 0.2s ease;
+}
+.wood-close-x:active { transform: scale(0.9); }
+
 /* Rope from top nail */
 .wood-rope-top {
   display: flex;
@@ -311,6 +330,13 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+/* Dual rope row between tags */
+.wood-tag-rope-row {
+  display: flex;
+  justify-content: space-between;
+  width: 60px;
 }
 
 /* Rope between tags */
@@ -378,12 +404,10 @@
     inset 0 1px 0 rgba(255,255,255,0.2);
 }
 
-/* Hole at top of tag */
+/* Holes at top of tag — left and right */
 .wood-tag-hole {
   position: absolute;
   top: 7px;
-  left: 50%;
-  transform: translateX(-50%);
   width: 7px;
   height: 7px;
   border-radius: 50%;
@@ -391,6 +415,8 @@
   box-shadow: inset 0 1px 2px rgba(0,0,0,0.6);
   border: 1px solid rgba(0,0,0,0.3);
 }
+.wood-tag-hole.left  { left: 18px; }
+.wood-tag-hole.right { right: 18px; }
 
 .wood-tag-emoji {
   font-size: 1.4rem;
