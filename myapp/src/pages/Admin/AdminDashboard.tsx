@@ -51,6 +51,12 @@ export default function AdminDashboard() {
   const [newPollDesc, setNewPollDesc] = useState('');
   const [newPollOptions, setNewPollOptions] = useState<string[]>(['', '']);
 
+  // Edit poll state
+  const [editingPoll, setEditingPoll] = useState<Poll | null>(null);
+  const [editPollTitle, setEditPollTitle] = useState('');
+  const [editPollDesc, setEditPollDesc] = useState('');
+  const [editPollOptions, setEditPollOptions] = useState<{ id: string; optionText: string }[]>([]);
+
   // Admin voting state
   const [selectedVoteOptions, setSelectedVoteOptions] = useState<Record<string, string>>({});
 
@@ -272,6 +278,35 @@ export default function AdminDashboard() {
       showFeedback('Official administrator vote recorded successfully! 🎉');
     } catch (err: unknown) {
       showFeedback(err instanceof Error ? err.message : 'Voting failed', 'error');
+    }
+  };
+
+  const handleOpenEditPoll = (poll: Poll) => {
+    setEditingPoll(poll);
+    setEditPollTitle(poll.title);
+    setEditPollDesc(poll.description || '');
+    setEditPollOptions(poll.options.map((o) => ({ id: o.id, optionText: o.optionText })));
+  };
+
+  const handleSavePoll = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editingPoll) return;
+    const validOpts = editPollOptions.filter((o) => o.optionText.trim().length > 0);
+    if (!editPollTitle.trim() || validOpts.length < 2) {
+      showFeedback('Title and at least 2 options are required', 'error');
+      return;
+    }
+    try {
+      const updated = await api.updatePoll(editingPoll.id, {
+        title: editPollTitle.trim(),
+        description: editPollDesc.trim(),
+        options: validOpts,
+      });
+      setPolls((prev) => prev.map((p) => (p.id === editingPoll.id ? updated : p)));
+      showFeedback('Poll updated successfully!');
+      setEditingPoll(null);
+    } catch (err: unknown) {
+      showFeedback(err instanceof Error ? err.message : 'Failed to update poll', 'error');
     }
   };
 
@@ -632,6 +667,9 @@ export default function AdminDashboard() {
                     </div>
 
                     <div className="poll-card-footer">
+                      <button className="btn-edit-poll" onClick={() => handleOpenEditPoll(poll)}>
+                        <FaEdit /> Edit
+                      </button>
                       <button className="btn-delete-poll" onClick={() => handleDeletePoll(poll.id)}>
                         <FaTrash /> Delete Contest
                       </button>
@@ -1396,6 +1434,71 @@ export default function AdminDashboard() {
                 <button type="submit" className="btn-submit">
                   Save Event
                 </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* ── Modal: Edit Poll ── */}
+      {editingPoll && (
+        <div className="admin-modal-overlay" onClick={() => setEditingPoll(null)}>
+          <div className="admin-modal-box" onClick={(e) => e.stopPropagation()}>
+            <h3>Edit Polling Contest</h3>
+            <form onSubmit={handleSavePoll} className="modal-crud-form">
+              <div className="form-field">
+                <label>Poll Title / Question</label>
+                <input
+                  type="text"
+                  required
+                  value={editPollTitle}
+                  onChange={(e) => setEditPollTitle(e.target.value)}
+                />
+              </div>
+              <div className="form-field">
+                <label>Description (Optional)</label>
+                <textarea
+                  rows={2}
+                  value={editPollDesc}
+                  onChange={(e) => setEditPollDesc(e.target.value)}
+                />
+              </div>
+              <div className="form-field">
+                <label>Poll Options</label>
+                {editPollOptions.map((opt, idx) => (
+                  <div key={opt.id} className="poll-option-input-row">
+                    <input
+                      type="text"
+                      placeholder={`Option ${idx + 1}`}
+                      value={opt.optionText}
+                      onChange={(e) => {
+                        const copy = [...editPollOptions];
+                        copy[idx] = { ...copy[idx], optionText: e.target.value };
+                        setEditPollOptions(copy);
+                      }}
+                    />
+                    {editPollOptions.length > 2 && (
+                      <button
+                        type="button"
+                        className="btn-remove-opt"
+                        onClick={() => setEditPollOptions(editPollOptions.filter((_, i) => i !== idx))}
+                      >
+                        <FaTimes />
+                      </button>
+                    )}
+                  </div>
+                ))}
+                <button
+                  type="button"
+                  className="btn-add-opt"
+                  onClick={() => setEditPollOptions([...editPollOptions, { id: `opt_new_${Date.now()}`, optionText: '' }])}
+                >
+                  + Add Another Option
+                </button>
+              </div>
+              <div className="modal-actions-bar">
+                <button type="button" className="btn-cancel" onClick={() => setEditingPoll(null)}>Cancel</button>
+                <button type="submit" className="btn-submit">Save Changes</button>
               </div>
             </form>
           </div>
