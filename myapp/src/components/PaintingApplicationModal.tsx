@@ -23,7 +23,6 @@ export default function PaintingApplicationModal({
   const [rollNumber, setRollNumber] = useState('');
   const [department, setDepartment] = useState('');
   const [hall, setHall] = useState('');
-  const [description, setDescription] = useState('');
 
   const [compStatus, setCompStatus] = useState<CompetitionStatus | null>(null);
   const [loadingStatus, setLoadingStatus] = useState(true);
@@ -70,8 +69,8 @@ export default function PaintingApplicationModal({
         rollNumber: rollNumber.trim(),
         department: department.trim() || 'General Department',
         hall: hall.trim() || 'General Campus Hall',
-        paintingCategory: 'General',
-        description: description.trim() || 'Creative artwork submission',
+        paintingCategory: 'Acrylic Painting',
+        description: 'Acrylic Painting',
       });
       setSubmitted(true);
       if (onSuccess) onSuccess();
@@ -232,19 +231,6 @@ export default function PaintingApplicationModal({
                   onChange={(e) => setHall(e.target.value)}
                 />
               </div>
-            </div>
-
-            <div className="form-field">
-              <label>
-                Concept / Artwork Description <span className="req">*</span>
-              </label>
-              <textarea
-                required
-                rows={3}
-                placeholder="Briefly describe your planned concept, theme, or artistic interpretation..."
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-              />
             </div>
 
             <div className="paint-form-actions">
