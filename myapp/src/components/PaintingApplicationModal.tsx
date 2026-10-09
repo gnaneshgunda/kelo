@@ -23,7 +23,6 @@ export default function PaintingApplicationModal({
   const [rollNumber, setRollNumber] = useState('');
   const [department, setDepartment] = useState('');
   const [hall, setHall] = useState('');
-  const [paintingCategory, setPaintingCategory] = useState('Watercolors on Canvas');
   const [description, setDescription] = useState('');
 
   const [compStatus, setCompStatus] = useState<CompetitionStatus | null>(null);
@@ -71,7 +70,7 @@ export default function PaintingApplicationModal({
         rollNumber: rollNumber.trim(),
         department: department.trim() || 'General Department',
         hall: hall.trim() || 'General Campus Hall',
-        paintingCategory,
+        paintingCategory: 'General',
         description: description.trim() || 'Creative artwork submission',
       });
       setSubmitted(true);
@@ -233,23 +232,6 @@ export default function PaintingApplicationModal({
                   onChange={(e) => setHall(e.target.value)}
                 />
               </div>
-            </div>
-
-            <div className="form-field">
-              <label>
-                Painting Category <span className="req">*</span>
-              </label>
-              <select
-                value={paintingCategory}
-                onChange={(e) => setPaintingCategory(e.target.value)}
-                className="paint-select"
-              >
-                <option value="Watercolors on Canvas">Watercolors on Canvas</option>
-                <option value="Acrylic & Mixed Media">Acrylic & Mixed Media</option>
-                <option value="Oil Painting">Oil Painting</option>
-                <option value="Charcoal / Pencil Sketching">Charcoal / Pencil Sketching</option>
-                <option value="Campus Culture & Hall Day Theme">Campus Culture & Hall Day Theme</option>
-              </select>
             </div>
 
             <div className="form-field">
