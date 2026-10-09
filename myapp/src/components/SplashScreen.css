@@ -60,11 +60,10 @@
 }
 
 .splash-subtitle {
-  font-family: 'Inter', sans-serif;
-  font-size: 0.85rem;
-  letter-spacing: 2.5px;
-  color: rgba(255,255,255,0.55);
-  text-transform: uppercase;
+  font-family: 'Brusher', cursive;
+  font-size: 1.1rem;
+  letter-spacing: 1px;
+  color: rgba(255,255,255,0.75);
   margin-top: 6px;
   transition: all 0.9s cubic-bezier(0.25, 1, 0.5, 1);
 }

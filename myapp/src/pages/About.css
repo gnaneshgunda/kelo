@@ -39,8 +39,8 @@
 }
 
 .tagline {
-  font-size: 1.3rem;
-  font-weight: 300;
+  font-family: 'Brusher', cursive;
+  font-size: 1.6rem;
   letter-spacing: 1px;
   opacity: 0.9;
   margin-bottom: 0.4rem;
