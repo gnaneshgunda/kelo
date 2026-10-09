@@ -48,13 +48,14 @@
 }
 
 .splash-title {
-  font-family: 'Bebas Neue', sans-serif;
+  font-family: 'Libre Bodoni', Georgia, serif;
   font-size: 5.5rem;
   font-weight: 400;
   letter-spacing: 12px;
   color: #fff;
   line-height: 1;
   margin: 0;
+  text-transform: uppercase;
   transition: all 0.9s cubic-bezier(0.25, 1, 0.5, 1);
 }
 

@@ -9,7 +9,7 @@ export default function About() {
       <div className="about-hero">
         <div className="hero-text">
           <h1>KELO</h1>
-          <p className="tagline">The Key to Your Locked Feelings</p>
+          <p className="tagline">The key to your unexpressed love</p>
           <p className="hero-sub">Crafted at IIT Kharagpur, delivered with heart.</p>
         </div>
       </div>

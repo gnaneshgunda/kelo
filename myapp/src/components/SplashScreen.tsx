@@ -32,7 +32,7 @@ export default function SplashScreen() {
         <img src={keloLogo} alt="KELO Logo" className="splash-logo-img" />
         <div className="splash-text-block">
           <h1 className="splash-title">KELO</h1>
-          <p className="splash-subtitle">The Key to Your Locked Feelings</p>
+          <p className="splash-subtitle">The key to your unexpressed love</p>
         </div>
       </div>
     </div>

@@ -28,12 +28,13 @@
 }
 
 .about-hero h1 {
-  font-family: var(--font-display);
+  font-family: 'Libre Bodoni', Georgia, serif;
   font-size: 6rem;
   letter-spacing: 16px;
   color: #fff;
   line-height: 1;
   margin-bottom: 0.5rem;
+  text-transform: uppercase;
   position: relative;
 }
 
