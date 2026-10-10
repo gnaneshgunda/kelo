@@ -260,6 +260,29 @@ competitionsRouter.patch('/admin/applications/:id', authMiddleware, async (req: 
       return;
     }
 
+    const app = result.rows[0];
+
+    // Remove from poll if REJECTED, re-add if ACCEPTED/PENDING
+    const optId = `opt_${id}`;
+    try {
+      const pollCheck = await query('SELECT id FROM polls WHERE event_id = $1', [app.event_id]);
+      if (pollCheck.rowCount! > 0) {
+        const pollId = pollCheck.rows[0].id;
+        if (status === 'REJECTED') {
+          await query('DELETE FROM poll_options WHERE id = $1 AND poll_id = $2', [optId, pollId]);
+        } else {
+          // ACCEPTED or PENDING — ensure they're in the poll
+          const optText = `${app.full_name.trim()} (${app.roll_number.trim()} • ${app.hall.trim()} - ${app.painting_category.trim()})`;
+          await query(
+            `INSERT INTO poll_options (id, poll_id, option_text, votes) VALUES ($1, $2, $3, 0) ON CONFLICT (id) DO NOTHING`,
+            [optId, pollId, optText]
+          );
+        }
+      }
+    } catch (pollErr) {
+      console.error('[Poll sync on status change]', pollErr);
+    }
+
     res.json({
       success: true,
       message: `Application marked as ${status}`,
