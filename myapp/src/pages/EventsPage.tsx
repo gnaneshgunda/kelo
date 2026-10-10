@@ -397,7 +397,7 @@ export default function EventsPage() {
                               No registered candidates in this polling contest yet. Registered applicants will appear here automatically.
                             </p>
                           ) : (
-                            linkedPoll.options.map((opt) => {
+                            [...linkedPoll.options].sort((a, b) => b.votes - a.votes).map((opt) => {
                               const total = linkedPoll.totalVotes || 1;
                               const pct = Math.round((opt.votes / (total || 1)) * 100);
 
